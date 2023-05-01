@@ -5,6 +5,7 @@ importers:
   packages/core:
     specifiers:
       '@octokit/openapi-types': ^17.1.0
+      '@primer/octicons-react': ^18.3.0
       '@primer/react': ^35.25.1
       '@storybook/addon-essentials': ^7.0.7
       '@storybook/addon-interactions': ^7.0.7
@@ -32,6 +33,7 @@ importers:
       prop-types: ^15.8.1
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-is: ^18.2.0
       storybook: ^7.0.7
       styled-components: ^5.3.10
       ts-jest: ^29.1.0
@@ -39,6 +41,7 @@ importers:
       vite: ^4.3.2
     dependencies:
       '@octokit/openapi-types': 17.1.0
+      '@primer/octicons-react': 18.3.0_react@18.2.0
       '@primer/react': 35.25.1_hcx6qw6l7iiqminquzlcszwrmq
       '@styled-system/css': 5.1.5
       '@types/marked': 4.0.8
@@ -47,7 +50,8 @@ importers:
       marked: 4.3.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      styled-components: 5.3.10_biqbaboplfbrettd7655fr4n2y
+      react-is: 18.2.0
+      styled-components: 5.3.10_7i5myeigehqah43i5u7wbekgba
     devDependencies:
       '@storybook/addon-essentials': 7.0.7_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-interactions': 7.0.7_biqbaboplfbrettd7655fr4n2y
@@ -75,6 +79,7 @@ importers:
 
   packages/web:
     specifiers:
+      '@primer/react': ^35.25.1
       '@types/node': 18.16.3
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -83,8 +88,11 @@ importers:
       next: 13.3.2
       react: 18.2.0
       react-dom: 18.2.0
+      react-is: ^18.2.0
+      styled-components: ^5.3.10
       typescript: 5.0.4
     dependencies:
+      '@primer/react': 35.25.1_hcx6qw6l7iiqminquzlcszwrmq
       '@types/node': 18.16.3
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -93,6 +101,8 @@ importers:
       next: 13.3.2_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
+      styled-components: 5.3.10_7i5myeigehqah43i5u7wbekgba
       typescript: 5.0.4
 
 packages:
@@ -2212,7 +2222,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-intersection-observer: 9.4.3_react@18.2.0
-      styled-components: 5.3.10_biqbaboplfbrettd7655fr4n2y
+      styled-components: 5.3.10_7i5myeigehqah43i5u7wbekgba
       styled-system: 5.1.5
     dev: false
 
@@ -4073,7 +4083,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.10_biqbaboplfbrettd7655fr4n2y
+      styled-components: 5.3.10_7i5myeigehqah43i5u7wbekgba
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
@@ -7693,7 +7703,7 @@ packages:
     dependencies:
       '@jest/schemas': 29.4.3
       ansi-styles: 5.2.0
-      react-is: 18.1.0
+      react-is: 18.2.0
     dev: true
 
   /pretty-hrtime/1.0.3:
@@ -7913,6 +7923,9 @@ packages:
   /react-is/18.1.0:
     resolution: {integrity: sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==}
     dev: true
+
+  /react-is/18.2.0:
+    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
 
   /react-refresh/0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
@@ -8509,7 +8522,7 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  /styled-components/5.3.10_biqbaboplfbrettd7655fr4n2y:
+  /styled-components/5.3.10_7i5myeigehqah43i5u7wbekgba:
     resolution: {integrity: sha512-3kSzSBN0TiCnGJM04UwO1HklIQQSXW7rCARUk+VyMR7clz8XVlA3jijtf5ypqoDIdNMKx3la4VvaPFR855SFcg==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -8527,6 +8540,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
       shallowequal: 1.1.0
       supports-color: 5.5.0
     dev: false

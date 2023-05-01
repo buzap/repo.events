@@ -5,7 +5,7 @@ import { Box, Link, SxProp, Avatar, Text, RelativeTime, themeGet } from '@primer
 import { AnyEvent } from '../../types/github'
 import { MarkdownPreview } from '../markdown'
 
-export interface EventBaseProps extends SxProp {
+export interface BaseProps extends SxProp {
     event: AnyEvent
     summary?: React.ReactNode
     summaryLeading?: React.ReactNode
@@ -13,15 +13,7 @@ export interface EventBaseProps extends SxProp {
     content?: React.ReactNode
 }
 
-const Container = styled.div<SxProp>`
-    display: flex;
-    padding: 1rem 0;
-    border-bottom: 1px solid ${(props) => themeGet('colors.border.subtle')(props)};
-
-    ${(props) => css(props.sx)}
-`
-
-export function EventBase(props: EventBaseProps) {
+export function Base(props: BaseProps) {
     const event = props.event
     const actor = event.actor
     const linkToActorProfile = `https://github.com/${actor.login}`
@@ -74,3 +66,11 @@ export function EventBase(props: EventBaseProps) {
         </Container>
     )
 }
+
+const Container = styled.div<SxProp>`
+    display: flex;
+    padding: 1rem 0;
+    border-bottom: 1px solid ${(props) => themeGet('colors.border.subtle')(props)};
+
+    ${(props) => css(props.sx)}
+`
