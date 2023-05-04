@@ -1,4 +1,3 @@
-import React from 'react'
 import { SxProp, StyledOcticon, Link } from '@primer/react'
 import { CommentIcon } from '@primer/octicons-react'
 import { GithubEvent } from '../../types/github'
