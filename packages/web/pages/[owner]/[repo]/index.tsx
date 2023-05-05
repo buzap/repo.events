@@ -7,7 +7,7 @@ export default function Page() {
     const { owner, repo } = router.query
 
     return (
-        <Box>
+        <Box sx={{ maxWidth: '960px', mx: 'auto', px: 3, py: 3 }}>
             <Timeline owner={owner as string} repo={repo as string} />
         </Box>
     )
