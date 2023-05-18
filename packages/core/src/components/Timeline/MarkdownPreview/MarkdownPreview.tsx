@@ -74,6 +74,9 @@ const Container = styled.div`
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+    blockquote a {
+        color: ${(props) => themeGet('colors.fg.muted')(props)};
+    }
 
     code {
         padding: 0.2em 0.4em;
