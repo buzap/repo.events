@@ -1,6 +1,6 @@
 import { Box, SxProp, RelativeTime, Text } from '@primer/react'
 import { GithubEvent } from '../../../../types/github'
-import { MarkdownPreview } from '../../markdown'
+import { MarkdownPreview } from '../../MarkdownPreview'
 import { Actor } from '../../../Actor'
 
 export interface BaseProps extends SxProp {
@@ -34,7 +34,7 @@ export function Base(props: BaseProps) {
                     sx={{ color: 'fg.muted' }}
                 />
             </Box>
-            <Box sx={{ ml: '34px', paddingY: 1 }}>
+            <Box sx={{ ml: '34px' }}>
                 {props.headline && <Box>{props.headline}</Box>}
                 {details && <Box sx={{ mt: 1 }}>{details}</Box>}
             </Box>

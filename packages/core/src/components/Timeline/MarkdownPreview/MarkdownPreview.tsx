@@ -33,19 +33,44 @@ const Container = styled.div`
         margin-top: 0;
         margin-bottom: 0;
     }
+
     a {
-        color: ${(props) => themeGet('colors.accent.fg')(props)};
+        color: ${(props) => themeGet('colors.fg.default')(props)};
         text-decoration: none;
         &:hover {
+            color: ${(props) => themeGet('colors.accent.fg')(props)};
             text-decoration: underline;
         }
     }
+
+    strong {
+        color: ${(props) => themeGet('colors.fg.default')(props)};
+        font-weight: ${(props) => themeGet('fontWeights.normal')(props)};
+    }
+
+    & > p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
     blockquote {
         margin: 0.25em 0;
         padding: 0 1em;
         color: ${(props) => themeGet('colors.fg.muted')(props)};
         border-left: 0.25em solid ${(props) => themeGet('colors.border.default')(props)};
     }
+    blockquote > p {
+        display: none;
+    }
+    blockquote > p:first-of-type {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
     code {
         padding: 0.2em 0.4em;
         margin: 0;
@@ -55,5 +80,6 @@ const Container = styled.div`
         background-color: ${(props) => themeGet('colors.neutral.muted')(props)};
         border-radius: 6px;
     }
+
     ${sx}
 `

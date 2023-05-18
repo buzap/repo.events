@@ -23,7 +23,7 @@ export function Row(props: RowProps) {
                 borderBottomWidth: 1,
                 borderBottomStyle: 'solid',
                 borderBottomColor: 'border.subtle',
-                paddingY: 2,
+                paddingY: 3,
                 ...props.sx,
             }}
         >

@@ -130,7 +130,6 @@ importers:
       eslint: 8.39.0
       eslint-config-next: 13.3.2
       eslint-plugin-storybook: ^0.6.11
-      isomorphic-fetch: ^3.0.0
       next: 13.3.2
       react: 18.2.0
       react-dom: 18.2.0
@@ -149,7 +148,6 @@ importers:
       core: link:../core
       eslint: 8.39.0
       eslint-config-next: 13.3.2_iacogk7kkaymxepzhgcbytyi7q
-      isomorphic-fetch: 3.0.0
       next: 13.3.2_5lnmxaau2bs7vcvowl2iwadrxa
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -7663,6 +7661,7 @@ packages:
       whatwg-fetch: 3.6.2
     transitivePeerDependencies:
       - encoding
+    dev: true
 
   /isomorphic-unfetch/3.1.0:
     resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
@@ -10926,6 +10925,7 @@ packages:
 
   /whatwg-fetch/3.6.2:
     resolution: {integrity: sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==}
+    dev: true
 
   /whatwg-url/5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}

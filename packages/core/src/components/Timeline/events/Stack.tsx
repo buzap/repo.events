@@ -39,7 +39,7 @@ export function Stack(props: StackProps) {
     }
 
     return (
-        <Details {...getDetailsProps()} sx={{ backgroundColor: open ? 'canvas.subtle' : 'inherit', ...props.sx }}>
+        <Details {...getDetailsProps()} sx={{ ...props.sx }}>
             <Box
                 as="summary"
                 sx={{

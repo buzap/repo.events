@@ -23,7 +23,7 @@ export function IssueCommentEvent(props: IssueCommentEventProps) {
                     icon={CommentIcon}
                     title={issue?.title || ''}
                     trailingText={`#${issue?.number || ''} (comment)`}
-                    url={issue?.html_url || ''}
+                    url={payload.comment?.html_url || ''}
                 />
             )
             break
