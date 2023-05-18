@@ -10,7 +10,7 @@ export interface Settings {
 
 export interface DasnboardProps extends Pick<DialogProps, 'isOpen' | 'onDismiss' | 'returnFocusRef'>, SxProp {
     settings: Settings
-    onSettingChange: (key: keyof Settings, value: unknown) => void
+    onSettingChange: (settings: Partial<Settings>) => void
 }
 
 export function Dashboard(props: DasnboardProps) {
@@ -35,7 +35,7 @@ export function Dashboard(props: DasnboardProps) {
             try {
                 await octo.rest.meta.root()
                 setIsTokenValid(true)
-                onSettingChange('personalAccessToken', value)
+                onSettingChange({ personalAccessToken: value })
             } catch (err) {
                 console.warn(err)
                 const requestErr = err as RequestError
@@ -53,7 +53,7 @@ export function Dashboard(props: DasnboardProps) {
     const onDeleteToken = useCallback(() => {
         setToken(null)
         setIsTokenValid(null)
-        onSettingChange('personalAccessToken', null)
+        onSettingChange({ personalAccessToken: null })
     }, [onSettingChange])
 
     return (

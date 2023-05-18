@@ -14,8 +14,8 @@ export const Default: Story = {
         settings: {
             personalAccessToken: null,
         },
-        onSettingChange: (key: keyof Settings, value: unknown) => {
-            console.log(key, value)
+        onSettingChange: (settings: Partial<Settings>) => {
+            console.log(settings)
         },
     },
 }

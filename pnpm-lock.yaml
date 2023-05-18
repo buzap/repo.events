@@ -137,6 +137,7 @@ importers:
       eslint-config-next: 13.3.2
       eslint-plugin-storybook: ^0.6.11
       next: 13.3.2
+      octokit: ^2.0.14
       react: 18.2.0
       react-dom: 18.2.0
       react-is: ^18.2.0
@@ -155,6 +156,7 @@ importers:
       eslint: 8.39.0
       eslint-config-next: 13.3.2_iacogk7kkaymxepzhgcbytyi7q
       next: 13.3.2_5lnmxaau2bs7vcvowl2iwadrxa
+      octokit: 2.0.14
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0

@@ -32,6 +32,10 @@ export class EventLoader {
     }
 
     async nextEvents(): Promise<TimelineItem[]> {
+        return this.requestNextEvents()
+    }
+
+    private async requestNextEvents(): Promise<TimelineItem[]> {
         const resp = await this.iterator.next()
 
         const items: TimelineItem[] = []

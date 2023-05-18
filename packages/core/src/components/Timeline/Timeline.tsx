@@ -1,49 +1,70 @@
-import { useState, useEffect, useMemo } from 'react'
-import { SxProp, Box, TabNav } from '@primer/react'
+import { useState, useEffect, useRef } from 'react'
+import { SxProp, Box } from '@primer/react'
 import { Octokit } from 'octokit'
 import { LoadDrive } from './LoadDrive'
 import { EventLoader, TimelineItem } from './eventLoader'
 import { Row } from './Row'
+import { LoadingError } from './LoadingError'
 
 export interface TimelineProps extends SxProp {
     owner: string
     repo: string
+    requestAuthentication: () => void
+    octokit?: Octokit
+    octokitAuthenticated?: boolean
 }
 
 export function Timeline(props: TimelineProps) {
     const [items, setItems] = useState<TimelineItem[]>([])
-
-    const loader = useMemo(() => {
-        const octo = new Octokit({
-            auth: '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',
-        })
-        const loader = new EventLoader(octo, props.owner, props.repo)
-        const next = async () => {
-            const items = await loader.nextEvents()
-            setItems((original) => [...original, ...items])
-        }
-        return { next }
-    }, [props.owner, props.repo])
+    const loaderRef = useRef<(() => Promise<void>) | null>(null)
+    const [loadingErr, setLoadingErr] = useState<unknown | null>(null)
 
     useEffect(() => {
+        let octo = props.octokit
+        if (!octo) {
+            octo = new Octokit({})
+        }
+        const loader = new EventLoader(octo, props.owner, props.repo)
+        const next = async () => {
+            try {
+                const items = await loader.nextEvents()
+                setItems((original) => [...original, ...items])
+            } catch (err) {
+                console.warn('request error', err)
+                setLoadingErr(err)
+            }
+        }
+        loaderRef.current = next
+
         setItems([])
-    }, [props.owner, props.repo])
+        // next()
+    }, [props.owner, props.repo, props.octokit])
+
+    let footer: React.ReactNode = (
+        <LoadDrive requestLoad={loaderRef.current || noopLoader} maxAutomaticLoad={16} sx={{ marginTop: 3 }} />
+    )
+    if (loadingErr !== null) {
+        footer = (
+            <LoadingError
+                error={loadingErr}
+                authenticated={!!props.octokitAuthenticated}
+                requestAuthentication={props.requestAuthentication}
+            />
+        )
+    }
 
     return (
         <Box sx={props.sx}>
-            <TabNav>
-                <TabNav.Link href="#" selected>
-                    All
-                </TabNav.Link>
-                <TabNav.Link href="#">Push</TabNav.Link>
-                <TabNav.Link href="#">Issues</TabNav.Link>
-            </TabNav>
             <Box>
                 {items.map((item) => (
                     <Row key={item.id} item={item} />
                 ))}
-                <LoadDrive requestLoad={loader.next} maxAutomaticLoad={5} sx={{ marginTop: 3 }} />
+                {footer}
             </Box>
         </Box>
     )
+}
+
+async function noopLoader(): Promise<void> {
+    // noop
 }

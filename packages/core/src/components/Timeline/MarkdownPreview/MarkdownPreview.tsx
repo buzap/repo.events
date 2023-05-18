@@ -43,6 +43,10 @@ const Container = styled.div`
         }
     }
 
+    em {
+        font-style: normal;
+    }
+
     img {
         display: none;
     }
