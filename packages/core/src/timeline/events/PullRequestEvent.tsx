@@ -1,7 +1,7 @@
 import { SxProp, StateLabelProps } from '@primer/react'
 import { GithubEvent, PullRequestEventPayload } from '../../types/github'
 import { Base } from './Base'
-import { IssueHeading } from './IssueHeading'
+import { PrimaryHeadline } from './common'
 
 export interface PullRequestEventProps extends SxProp {
     event: GithubEvent
@@ -19,16 +19,19 @@ export function PullRequestEvent(props: PullRequestEventProps) {
     switch (payload.action) {
         case 'opened':
             status = 'pullOpened'
-            description = 'opened pull request'
+            description = 'opened a pull request'
             details = pr.body || ''
             break
         case 'closed':
             status = 'pullClosed'
-            description = 'closed pull request'
+            description = 'closed a pull request'
+            if (pr.merged) {
+                status = 'pullMerged'
+            }
             break
         case 'reopened':
             status = 'pullOpened'
-            description = 'reopened pull request'
+            description = 'reopened a pull request'
             break
         default:
             console.warn(`hidden PullRequestEvent of action ${payload.action}`, event)
@@ -39,7 +42,9 @@ export function PullRequestEvent(props: PullRequestEventProps) {
         <Base
             event={event}
             description={description}
-            headline={<IssueHeading status={status} title={pr.title} number={pr.number} url={pr.html_url} />}
+            headline={
+                <PrimaryHeadline status={status} title={pr.title} trailingText={`#${pr.number}`} url={pr.html_url} />
+            }
             details={details}
         />
     )

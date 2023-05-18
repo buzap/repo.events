@@ -39,33 +39,35 @@ export function Stack(props: StackProps) {
     }
 
     return (
-        <Details {...getDetailsProps()} sx={{ ...props.sx }}>
-            <Box as="summary">
-                <Box
-                    sx={{
-                        display: 'flex',
-                        cursor: 'pointer',
-                        '&:hover': { textDecoration: 'underline', textUnderlineOffset: '0.5rem' },
-                    }}
-                >
-                    <Box as="span" sx={{ flexGrow: 1 }}>
-                        {shownEvents.map((event) => (
-                            <Avatar key={event.id} src={event.actor.avatar_url} size={26} sx={{ mr: 1 }} />
-                        ))}
+        <Details {...getDetailsProps()} sx={{ backgroundColor: open ? 'canvas.subtle' : 'inherit', ...props.sx }}>
+            <Box
+                as="summary"
+                sx={{
+                    display: 'flex',
+                    cursor: 'pointer',
+                    paddingY: 1,
+                    '&:hover': {
+                        backgroundColor: 'canvas.subtle',
+                    },
+                }}
+            >
+                <Box as="span" sx={{ flexGrow: 1 }}>
+                    {shownEvents.map((event) => (
+                        <Avatar key={event.id} src={event.actor.avatar_url} size={20} sx={{ mr: 1 }} />
+                    ))}
 
-                        <Text sx={{ ml: 1, verticalAlign: 'middle', color: 'fg.muted' }}>
-                            {collapsedEvents > 0 && <>and {collapsedEvents} others </>}
-                            {summary}
-                        </Text>
-                    </Box>
-                    <IconButton
-                        aria-label="toggle details"
-                        icon={open ? FoldIcon : UnfoldIcon}
-                        size="small"
-                        variant="invisible"
-                        onClick={toggleDetails}
-                    />
+                    <Text sx={{ ml: 1, verticalAlign: 'middle', color: 'fg.muted' }}>
+                        {collapsedEvents > 0 && <>and {collapsedEvents} others </>}
+                        {summary}
+                    </Text>
                 </Box>
+                <IconButton
+                    aria-label="toggle details"
+                    icon={open ? FoldIcon : UnfoldIcon}
+                    size="small"
+                    variant="invisible"
+                    onClick={toggleDetails}
+                />
             </Box>
             <Box sx={{ ml: '32px', mt: 2 }}>
                 {events.map((event) => (

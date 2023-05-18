@@ -2,7 +2,7 @@ import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
 import issueOpenedEventSample from '../../fixtures/issueOpenedEvent.json'
 import { Base } from './base'
-import { IssueHeading } from './IssueHeading'
+import { PrimaryHeadline } from './common'
 
 export default {
     title: 'timeline/events/Base',
@@ -22,11 +22,11 @@ DescriptionAndHeadline.args = {
     event: issueOpenedEventSample as unknown,
     description: 'opened issue',
     headline: (
-        <IssueHeading
+        <PrimaryHeadline
             status="issueOpened"
             title="Allow to change the font size and font of the workbench"
             url="https://github.com/microsoft/vscode/issues/519"
-            number={519}
+            trailingText="#519"
         />
     ),
 }
@@ -36,11 +36,11 @@ EveryThing.args = {
     event: issueOpenedEventSample as unknown,
     description: 'opened issue',
     headline: (
-        <IssueHeading
+        <PrimaryHeadline
             status="issueOpened"
             title="Allow to change the font size and font of the workbench"
             url="https://github.com/microsoft/vscode/issues/519"
-            number={519}
+            trailingText="#519"
         />
     ),
     markdownDetails: issueOpenedEventSample.payload.issue.body,

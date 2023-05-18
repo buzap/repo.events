@@ -1,6 +1,6 @@
+import styled from 'styled-components'
 import { Avatar, Box, Link, SxProp, Text, themeGet } from '@primer/react'
 import { GithubEvent } from '../../types/github'
-import styled from 'styled-components'
 
 export interface ActorProps extends SxProp {
     actor: GithubEvent['actor']
@@ -18,9 +18,9 @@ export function Actor(props: ActorProps) {
             </Link>
             <StyledActorName href={linkToActorProfile} muted>
                 <Text>{actor.login}</Text>
-                {actor.display_login && actor.display_login !== actor.login && (
+                {/* {actor.display_login && actor.display_login !== actor.login && (
                     <Text sx={{ ml: 1, color: 'fg.muted' }}>{actor.display_login}</Text>
-                )}
+                )} */}
             </StyledActorName>
         </Box>
     )

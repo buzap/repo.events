@@ -22,6 +22,13 @@ IssueClosed.args = {
     event: issueClosedEventSample as GithubEvent,
 }
 
+export const IssueClosedNotPlanned = template.bind({})
+const issueClosedNotPlannedSample = JSON.parse(JSON.stringify(issueClosedEventSample))
+issueClosedNotPlannedSample.payload.issue.state_reason = 'not_planned'
+IssueClosedNotPlanned.args = {
+    event: issueClosedNotPlannedSample,
+}
+
 // export const issueReopened = template.bind({})
 // issueReopened.args = {
 //     event: {},

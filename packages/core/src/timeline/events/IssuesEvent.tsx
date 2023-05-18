@@ -1,7 +1,7 @@
 import { SxProp, StateLabelProps } from '@primer/react'
 import { GithubEvent } from '../../types/github'
 import { Base } from './Base'
-import { IssueHeading } from './IssueHeading'
+import { PrimaryHeadline } from './common'
 
 export interface IssuesEventProps extends SxProp {
     event: GithubEvent
@@ -19,16 +19,19 @@ export function IssuesEvent(props: IssuesEventProps) {
     switch (event.payload.action) {
         case 'opened':
             status = 'issueOpened'
-            description = 'opened issue'
+            description = 'opened an issue'
             details = issue?.body || ''
             break
         case 'closed':
             status = 'issueClosed'
-            description = 'closed issue'
+            description = 'closed an issue'
+            if (issue?.state_reason === 'not_planned') {
+                status = 'issueClosedNotPlanned'
+            }
             break
         case 'reopened':
             status = 'issueOpened'
-            description = 'reopened issue'
+            description = 'reopened an issue'
             break
         default:
             console.info(`hidden IssuesEvent of action ${event.payload.action}`, event)
@@ -40,11 +43,11 @@ export function IssuesEvent(props: IssuesEventProps) {
             event={event}
             description={description}
             headline={
-                <IssueHeading
+                <PrimaryHeadline
                     title={issue?.title || ''}
                     status={status}
-                    url={issue?.url || ''}
-                    number={issue?.number || 0}
+                    url={issue?.html_url || ''}
+                    trailingText={`#${issue?.number || 0}`}
                 />
             }
             markdownDetails={details}

@@ -1,18 +1,18 @@
 import { Box, StateLabelProps, SxProp } from '@primer/react'
-import { StateLabel, PrimaryLink } from '../../components'
+import { StateLabel, PrimaryLink } from '../../../components'
 
-export interface IssueHeadingProps extends SxProp {
+export interface PrimaryHeadlineProps extends SxProp {
     status: StateLabelProps['status']
     title: string
+    trailingText?: string
     url: string
-    number: number
 }
 
-export function IssueHeading(props: IssueHeadingProps) {
+export function PrimaryHeadline(props: PrimaryHeadlineProps) {
     return (
-        <Box>
+        <Box sx={props.sx}>
             <StateLabel status={props.status} variant="small" sx={{ mr: 2, verticalAlign: 'bottom' }} />
-            <PrimaryLink href={props.url} trailingText={`#${props.number}`}>
+            <PrimaryLink href={props.url} trailingText={props.trailingText}>
                 {props.title}
             </PrimaryLink>
         </Box>

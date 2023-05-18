@@ -1,6 +1,8 @@
 import { SxProp, BranchName, Link } from '@primer/react'
+import { CommitIcon, Icon, TagIcon } from '@primer/octicons-react'
 import { AnyEvent, GithubEvent, PushEvent as PushEventData } from '../../types/github'
 import { Base } from './Base'
+import { SecondaryHeadline } from './common'
 
 export interface PushEventProps extends SxProp {
     event: PushEventData
@@ -9,32 +11,14 @@ export interface PushEventProps extends SxProp {
 const gitRefPattern = /^refs\/(\w+)\/(.+)$/
 
 export function PushEvent(props: PushEventProps) {
-    const event = props.event
-
-    const summary = <Summary event={event} />
-    const content = <Content event={event} />
-    return (
-        <Base
-            event={props.event as GithubEvent}
-            description="push"
-            headline={summary}
-            details={content}
-            sx={props.sx}
-        />
-    )
-}
-
-function Summary(props: { event: PushEventData }) {
-    const event = props.event
+    const { event } = props
     const payload = event.payload
 
-    let refTypeDesc: React.ReactNode = null
-    let refName: React.ReactNode = null
+    let refTypeDesc: React.ReactNode = 'ref'
+    let refName: React.ReactNode = payload.ref
+    let icon: Icon = CommitIcon
     const refMatch = gitRefPattern.exec(payload.ref)
-    if (!refMatch) {
-        refTypeDesc = 'ref'
-        refName = payload.ref
-    } else {
+    if (refMatch) {
         const tagOrBranch = refMatch[2]
         refName = <BranchName href={newGithubLink(event, `/tree/${tagOrBranch}`)}>{tagOrBranch}</BranchName>
         switch (refMatch[1]) {
@@ -43,34 +27,48 @@ function Summary(props: { event: PushEventData }) {
                 break
             case 'tags':
                 refTypeDesc = 'tag'
+                icon = TagIcon
                 break
-            default:
-                refTypeDesc = 'ref'
         }
     }
+    const headline = (
+        <SecondaryHeadline
+            icon={icon}
+            title={
+                <>
+                    Pushed {refTypeDesc} {refName}
+                </>
+            }
+            url=""
+        />
+    )
 
     return (
-        <>
-            Pushed {refTypeDesc} {refName}
-        </>
+        <Base
+            event={props.event as GithubEvent}
+            description="pushed to the repository"
+            headline={headline}
+            details={<Details event={event} />}
+            sx={props.sx}
+        />
     )
 }
 
-function Content(props: { event: PushEventData }) {
+function Details(props: { event: PushEventData }) {
     const event = props.event
     const payload = event.payload
     if (!payload.commits || payload.commits.length === 0) {
         return null
     }
 
-    const firstCommit = payload.commits[0]
-    let commitMessage = firstCommit.message.split('\n')[0]
+    const lastCommit = payload.commits[payload.commits.length - 1]
+    let commitMessage = lastCommit.message.split('\n')[0]
     if (commitMessage.length > 100) {
         commitMessage = commitMessage.substring(0, 100) + '...'
     }
-    const firstCommitNode: React.ReactNode = (
+    const lastCommitNode: React.ReactNode = (
         <div>
-            <Link href={newGithubLink(event, `/commit/${firstCommit.sha}`)}>{gitCommitShortSHA(firstCommit.sha)}</Link>{' '}
+            <Link href={newGithubLink(event, `/commit/${lastCommit.sha}`)}>{gitCommitShortSHA(lastCommit.sha)}</Link>{' '}
             {commitMessage}
         </div>
     )
@@ -93,7 +91,7 @@ function Content(props: { event: PushEventData }) {
 
     return (
         <>
-            {firstCommitNode}
+            {lastCommitNode}
             {remainCommitNode}
         </>
     )

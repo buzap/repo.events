@@ -1,6 +1,8 @@
 import { SxProp, Link, Text } from '@primer/react'
 import { GithubEvent } from '../../types/github'
 import { Base } from './Base'
+import { SecondaryHeadline } from './common'
+import { CommentIcon } from '@primer/octicons-react'
 
 export interface IssueCommentEventProps extends SxProp {
     event: GithubEvent
@@ -12,15 +14,17 @@ export function IssueCommentEvent(props: IssueCommentEventProps) {
     const issue = payload.issue
 
     let description: React.ReactNode = null
+    let headline: React.ReactNode = null
     switch (payload.action) {
         case 'created':
-            description = (
-                <Text>
-                    commented on issue&nbsp;
-                    <Link href={payload.comment?.html_url} muted sx={{ fontWeight: 'bold' }}>
-                        {issue?.title} #{issue?.number}
-                    </Link>
-                </Text>
+            description = 'commented on issue'
+            headline = (
+                <SecondaryHeadline
+                    icon={CommentIcon}
+                    title={issue?.title || ''}
+                    trailingText={`#${issue?.number || ''} (comment)`}
+                    url={issue?.html_url || ''}
+                />
             )
             break
         default:
@@ -28,5 +32,12 @@ export function IssueCommentEvent(props: IssueCommentEventProps) {
             return null
     }
 
-    return <Base event={event} description={description} markdownDetails={payload.comment?.body || ''} />
+    return (
+        <Base
+            event={event}
+            description={description}
+            headline={headline}
+            markdownDetails={payload.comment?.body || ''}
+        />
+    )
 }
