@@ -1,6 +1,5 @@
-import { SxProp, StyledOcticon, BranchName, Link } from '@primer/react'
-import { CommitIcon } from '@primer/octicons-react'
-import { AnyEvent, PushEvent as PushEventData } from '../../types/github'
+import { SxProp, BranchName, Link } from '@primer/react'
+import { AnyEvent, GithubEvent, PushEvent as PushEventData } from '../../types/github'
 import { Base } from './Base'
 
 export interface PushEventProps extends SxProp {
@@ -12,10 +11,17 @@ const gitRefPattern = /^refs\/(\w+)\/(.+)$/
 export function PushEvent(props: PushEventProps) {
     const event = props.event
 
-    const icon = <StyledOcticon icon={CommitIcon} />
     const summary = <Summary event={event} />
     const content = <Content event={event} />
-    return <Base event={props.event} summaryLeading={icon} summary={summary} content={content} sx={props.sx} />
+    return (
+        <Base
+            event={props.event as GithubEvent}
+            description="push"
+            headline={summary}
+            details={content}
+            sx={props.sx}
+        />
+    )
 }
 
 function Summary(props: { event: PushEventData }) {

@@ -1,42 +1,42 @@
-import { Box, SxProp, RelativeTime, StateLabelProps } from '@primer/react'
-import { AnyEvent } from '../../types/github'
+import { Box, SxProp, RelativeTime, Text } from '@primer/react'
+import { GithubEvent } from '../../types/github'
 import { MarkdownPreview } from '../markdown'
-import { Actor, StateLabel } from '../../components'
+import { Actor } from '../../components'
 
 export interface BaseProps extends SxProp {
-    event: AnyEvent
-    status?: StateLabelProps['status']
-    summary?: React.ReactNode
-    markdownContent?: string
-    content?: React.ReactNode
+    event: GithubEvent
+    description: React.ReactNode
+    headline?: React.ReactNode
+    details?: React.ReactNode
+    markdownDetails?: string
 }
 
 export function Base(props: BaseProps) {
-    const event = props.event
+    const { event } = props
 
-    let content: React.ReactNode = null
-    if (props.content) {
-        content = props.content
-    } else if (props.markdownContent) {
-        content = <MarkdownPreview content={props.markdownContent} />
+    let details: React.ReactNode = null
+    if (props.details) {
+        details = props.details
+    } else if (props.markdownDetails) {
+        details = <MarkdownPreview content={props.markdownDetails} />
     }
 
     return (
         <Box>
             <Box sx={{ display: 'flex' }}>
-                <Actor actor={props.event.actor} sx={{ flexGrow: 1 }} />
+                <Box as="span" sx={{ flexGrow: 1 }}>
+                    <Actor actor={props.event.actor} />
+                    <Text sx={{ ml: 1, color: 'fg.muted' }}>{props.description}</Text>
+                </Box>
                 <RelativeTime
                     datetime={event.created_at || ''}
                     title={event.created_at || ''}
-                    sx={{ alignSelf: 'flex-end', color: 'fg.muted' }}
+                    sx={{ color: 'fg.muted' }}
                 />
             </Box>
-            <Box sx={{ ml: '34px' }}>
-                <Box sx={{ color: 'fg.muted' }}>
-                    {props.status && <StateLabel status={props.status} variant="small" />}
-                    {props.summary}
-                </Box>
-                {content && <Box>{content}</Box>}
+            <Box sx={{ ml: '34px', paddingY: 1 }}>
+                {props.headline && <Box>{props.headline}</Box>}
+                {details && <Box sx={{ mt: 1 }}>{details}</Box>}
             </Box>
         </Box>
     )

@@ -11,7 +11,7 @@ export default {
 
 const template: StoryFn<typeof IssueCommentEvent> = (args) => <IssueCommentEvent {...args} />
 
-export const Created = template.bind([])
+export const Created = template.bind({})
 Created.args = {
     event: issueCommentEventSample as GithubEvent,
 }

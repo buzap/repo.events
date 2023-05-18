@@ -1,8 +1,8 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { EyeIcon } from '@primer/octicons-react'
 import issueOpenedEventSample from '../../fixtures/issueOpenedEvent.json'
 import { Base } from './base'
+import { IssueHeading } from './IssueHeading'
 
 export default {
     title: 'timeline/events/Base',
@@ -11,24 +11,37 @@ export default {
 
 const template: StoryFn<typeof Base> = (args) => <Base {...args} />
 
-export const WithoutContent = template.bind({})
-WithoutContent.args = {
+export const DescriptionOnly = template.bind({})
+DescriptionOnly.args = {
     event: issueOpenedEventSample as unknown,
-    status: 'issueOpened',
-    summary: 'This is the summary',
+    description: 'did something',
 }
 
-export const WithContent = template.bind({})
-WithContent.args = {
+export const DescriptionAndHeadline = template.bind({})
+DescriptionAndHeadline.args = {
     event: issueOpenedEventSample as unknown,
-    summary: 'There is some content below',
-    markdownContent: 'This should render as `markdown`',
+    description: 'opened issue',
+    headline: (
+        <IssueHeading
+            status="issueOpened"
+            title="Allow to change the font size and font of the workbench"
+            url="https://github.com/microsoft/vscode/issues/519"
+            number={519}
+        />
+    ),
 }
 
-const e1 = JSON.parse(JSON.stringify(issueOpenedEventSample))
-e1.actor.display_login = 'Shawn Conn'
-export const ShowDisplayLogin = template.bind({})
-ShowDisplayLogin.args = {
-    event: e1,
-    summary: 'See the display_login above',
+export const EveryThing = template.bind({})
+EveryThing.args = {
+    event: issueOpenedEventSample as unknown,
+    description: 'opened issue',
+    headline: (
+        <IssueHeading
+            status="issueOpened"
+            title="Allow to change the font size and font of the workbench"
+            url="https://github.com/microsoft/vscode/issues/519"
+            number={519}
+        />
+    ),
+    markdownDetails: issueOpenedEventSample.payload.issue.body,
 }

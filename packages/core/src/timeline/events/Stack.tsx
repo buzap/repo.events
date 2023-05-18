@@ -1,9 +1,8 @@
-import { Avatar, Box, Text, SxProp, RelativeTime, IconButton, sx } from '@primer/react'
+import { useCallback } from 'react'
+import { Avatar, Box, Text, SxProp, RelativeTime, IconButton, Details, useDetails } from '@primer/react'
 import { UnfoldIcon, FoldIcon } from '@primer/octicons-react'
 import { GithubEvent } from '../../types/github'
-import { Actor, StateLabel, StateLabelProps } from '../../components'
-import { useCallback, useState } from 'react'
-import styled from 'styled-components'
+import { Actor } from '../../components'
 
 export interface StackProps extends SxProp {
     events: GithubEvent[]
@@ -14,26 +13,20 @@ const COLLAPSE_LIMIT = 5
 
 export function Stack(props: StackProps) {
     const { events } = props
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const { getDetailsProps, open, setOpen } = useDetails({ defaultOpen: false, closeOnOutsideClick: false })
     const toggleDetails = useCallback(() => {
-        setIsOpen((v) => !v)
-    }, [setIsOpen])
+        setOpen((v) => !v)
+    }, [setOpen])
 
-    let status: StateLabelProps['status'] = ''
-    let statusText = ''
     let summary: React.ReactNode = null
     let action = ''
     switch (props.eventType) {
         case 'WatchEvent':
-            status = 'starred'
-            statusText = 'Star'
-            summary = 'Starred the repository'
+            summary = 'starred the repository'
             action = 'starred'
             break
         case 'ForkEvent':
-            status = 'forked'
-            statusText = 'Fork'
-            summary = 'Forked the repository'
+            summary = 'forked the repository'
             action = 'forked'
             break
     }
@@ -46,35 +39,32 @@ export function Stack(props: StackProps) {
     }
 
     return (
-        <StyledDetails open={isOpen} sx={{ ...props.sx }}>
+        <Details {...getDetailsProps()} sx={{ ...props.sx }}>
             <Box as="summary">
                 <Box
-                    onClick={toggleDetails}
-                    sx={{ display: 'flex', cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+                    sx={{
+                        display: 'flex',
+                        cursor: 'pointer',
+                        '&:hover': { textDecoration: 'underline', textUnderlineOffset: '0.5rem' },
+                    }}
                 >
                     <Box as="span" sx={{ flexGrow: 1 }}>
                         {shownEvents.map((event) => (
                             <Avatar key={event.id} src={event.actor.avatar_url} size={26} sx={{ mr: 1 }} />
                         ))}
-                        {collapsedEvents > 0 && (
-                            <Text sx={{ ml: 1, verticalAlign: 'middle', color: 'fg.muted' }}>
-                                and {collapsedEvents} others
-                            </Text>
-                        )}
+
+                        <Text sx={{ ml: 1, verticalAlign: 'middle', color: 'fg.muted' }}>
+                            {collapsedEvents > 0 && <>and {collapsedEvents} others </>}
+                            {summary}
+                        </Text>
                     </Box>
                     <IconButton
                         aria-label="toggle details"
-                        icon={isOpen ? FoldIcon : UnfoldIcon}
+                        icon={open ? FoldIcon : UnfoldIcon}
                         size="small"
                         variant="invisible"
-                        onClick={() => toggleDetails}
+                        onClick={toggleDetails}
                     />
-                </Box>
-                <Box sx={{ mt: 2, ml: '32px' }}>
-                    <StateLabel status={status} variant="small" sx={{ verticalAlign: 'middle' }}>
-                        {statusText}
-                    </StateLabel>
-                    <Text sx={{ verticalAlign: 'middle', ml: 1, color: 'fg.muted' }}>{summary}</Text>
                 </Box>
             </Box>
             <Box sx={{ ml: '32px', mt: 2 }}>
@@ -86,16 +76,6 @@ export function Stack(props: StackProps) {
                     </Box>
                 ))}
             </Box>
-        </StyledDetails>
+        </Details>
     )
 }
-
-const StyledDetails = styled.details`
-    & > summary {
-        list-style: none;
-    }
-    & > summary::-webkit-details-marker {
-        display: none;
-    }
-    ${sx};
-`
