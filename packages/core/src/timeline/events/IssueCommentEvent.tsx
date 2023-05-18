@@ -1,4 +1,4 @@
-import { SxProp, Link, Text } from '@primer/react'
+import { SxProp } from '@primer/react'
 import { GithubEvent } from '../../types/github'
 import { Base } from './Base'
 import { SecondaryHeadline } from './common'
