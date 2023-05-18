@@ -1,0 +1,108 @@
+{
+    "id": "27304809957",
+    "type": "IssuesEvent",
+    "actor": {
+        "id": 6820,
+        "login": "sophiebits",
+        "display_login": "sophiebits",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/sophiebits",
+        "avatar_url": "https://avatars.githubusercontent.com/u/6820?"
+    },
+    "repo": {
+        "id": 10270250,
+        "name": "facebook/react",
+        "url": "https://api.github.com/repos/facebook/react"
+    },
+    "payload": {
+        "action": "closed",
+        "issue": {
+            "url": "https://api.github.com/repos/facebook/react/issues/25129",
+            "repository_url": "https://api.github.com/repos/facebook/react",
+            "labels_url": "https://api.github.com/repos/facebook/react/issues/25129/labels{/name}",
+            "comments_url": "https://api.github.com/repos/facebook/react/issues/25129/comments",
+            "events_url": "https://api.github.com/repos/facebook/react/issues/25129/events",
+            "html_url": "https://github.com/facebook/react/issues/25129",
+            "id": 1347686983,
+            "node_id": "I_kwDOAJy2Ks5QVBJH",
+            "number": 25129,
+            "title": "Bug: out of order application of useState changes",
+            "user": {
+                "login": "zuozp8",
+                "id": 1228107,
+                "node_id": "MDQ6VXNlcjEyMjgxMDc=",
+                "avatar_url": "https://avatars.githubusercontent.com/u/1228107?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/zuozp8",
+                "html_url": "https://github.com/zuozp8",
+                "followers_url": "https://api.github.com/users/zuozp8/followers",
+                "following_url": "https://api.github.com/users/zuozp8/following{/other_user}",
+                "gists_url": "https://api.github.com/users/zuozp8/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/zuozp8/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/zuozp8/subscriptions",
+                "organizations_url": "https://api.github.com/users/zuozp8/orgs",
+                "repos_url": "https://api.github.com/users/zuozp8/repos",
+                "events_url": "https://api.github.com/users/zuozp8/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/zuozp8/received_events",
+                "type": "User",
+                "site_admin": false
+            },
+            "labels": [
+                {
+                    "id": 40929151,
+                    "node_id": "MDU6TGFiZWw0MDkyOTE1MQ==",
+                    "url": "https://api.github.com/repos/facebook/react/labels/Type:%20Bug",
+                    "name": "Type: Bug",
+                    "color": "b60205",
+                    "default": false,
+                    "description": null
+                },
+                {
+                    "id": 155984160,
+                    "node_id": "MDU6TGFiZWwxNTU5ODQxNjA=",
+                    "url": "https://api.github.com/repos/facebook/react/labels/Status:%20Unconfirmed",
+                    "name": "Status: Unconfirmed",
+                    "color": "d4c5f9",
+                    "default": false,
+                    "description": "A potential issue that we haven't yet confirmed as a bug"
+                }
+            ],
+            "state": "closed",
+            "locked": false,
+            "assignee": null,
+            "assignees": [],
+            "milestone": null,
+            "comments": 3,
+            "created_at": "2022-08-23T10:14:02Z",
+            "updated_at": "2023-02-24T07:07:24Z",
+            "closed_at": "2023-02-24T07:07:24Z",
+            "author_association": "NONE",
+            "active_lock_reason": null,
+            "body": "After updating my app to React 18 I had problem with inconsistent state from useState\r\n\r\nI created code example with the problem:\r\n* I have 2 states `const [done, setDone] = useState(false);` (inside hook) and `const [ids, setIds] = React.useState([])`\r\n* I call `setIds([1,2,4])` (inside await, but it's executed immediately, as we see in console) and then `setDone(true)`\r\n* then component is rerendered with updated `done` but original `ids`\r\n* then component is rerendered, but with both states updated\r\n\r\nReact version: 18.2.0, 18.3.0-next\r\nLink to code example: <https://codesandbox.io/s/purple-dust-ww9hjm?file=/src/index.jsx>\r\nSmaller repro: <https://codesandbox.io/s/cocky-fermat-qoiel3> (from eps1lon's comment)\r\n\r\n## The current behavior\r\nIn the example after clicking run:\r\n`Inner` is rerendered with `done: true`, but without updated `ids`.\r\n`FormikLike` is created with empty `ids`.\r\n`[]` is displayed under button.\r\n\r\n\r\n## The expected behavior\r\nFirst `Inner` rerender should have updated `ids` state.\r\n`FormikLike` should be created with non-empty `ids`.\r\n`[1,2,4]` is displayed under button.\r\n\r\nIt workied this way in React 17.\r\n\r\nIn https://stackoverflow.com/a/48610973 @gaearon wrote:\r\n> > But can you trust React to update the state in the same order as setState is called for the same component?\r\n>\r\n> Yes.\r\n\r\nAnswer was for class components, but I hope the same is true for multiple useState hooks in single function component.",
+            "reactions": {
+                "url": "https://api.github.com/repos/facebook/react/issues/25129/reactions",
+                "total_count": 0,
+                "+1": 0,
+                "-1": 0,
+                "laugh": 0,
+                "hooray": 0,
+                "confused": 0,
+                "heart": 0,
+                "rocket": 0,
+                "eyes": 0
+            },
+            "timeline_url": "https://api.github.com/repos/facebook/react/issues/25129/timeline",
+            "performed_via_github_app": null,
+            "state_reason": "not_planned"
+        }
+    },
+    "public": true,
+    "created_at": "2023-02-24T07:07:25Z",
+    "org": {
+        "id": 69631,
+        "login": "facebook",
+        "gravatar_id": "",
+        "url": "https://api.github.com/orgs/facebook",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69631?"
+    }
+}

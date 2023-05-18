@@ -8,6 +8,18 @@ export interface MarkdownPreviewProps extends SxProp {
     content: string
 }
 
+export function MarkdownPreview(props: MarkdownPreviewProps) {
+    const [content, setContent] = useState<string>('')
+
+    useEffect(() => {
+        parse(props.content).then((rendered) => {
+            setContent(rendered)
+        })
+    }, [props.content])
+
+    return <Container dangerouslySetInnerHTML={{ __html: content }} sx={props.sx} />
+}
+
 const Container = styled.div`
     &,
     h1,
@@ -45,15 +57,3 @@ const Container = styled.div`
     }
     ${sx}
 `
-
-export function MarkdownPreview(props: MarkdownPreviewProps) {
-    const [content, setContent] = useState<string>('')
-
-    useEffect(() => {
-        parse(props.content).then((rendered) => {
-            setContent(rendered)
-        })
-    }, [props.content])
-
-    return <Container dangerouslySetInnerHTML={{ __html: content }} sx={props.sx} />
-}

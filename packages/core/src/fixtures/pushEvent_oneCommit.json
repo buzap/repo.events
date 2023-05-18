@@ -1,0 +1,47 @@
+{
+    "id": "27332080155",
+    "type": "PushEvent",
+    "actor": {
+        "id": 2716369,
+        "login": "gnoff",
+        "display_login": "gnoff",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/gnoff",
+        "avatar_url": "https://avatars.githubusercontent.com/u/2716369?"
+    },
+    "repo": {
+        "id": 10270250,
+        "name": "facebook/react",
+        "url": "https://api.github.com/repos/facebook/react"
+    },
+    "payload": {
+        "repository_id": 10270250,
+        "push_id": 12744786710,
+        "size": 1,
+        "distinct_size": 1,
+        "ref": "refs/heads/main",
+        "head": "1173a17e6eea08599005e9f8e7d7a4245783edba",
+        "before": "e7d7d4cb4b61624c5762521370a58d941c1c46e3",
+        "commits": [
+            {
+                "sha": "1173a17e6eea08599005e9f8e7d7a4245783edba",
+                "author": {
+                    "email": "story@hey.com",
+                    "name": "Josh Story"
+                },
+                "message": "[Float][Fizz][Fiber] implement preconnect and prefetchDNS float methods (#26237)\n\nAdds two new ReactDOM methods\r\n\r\n### `ReactDOM.prefetchDNS(href: string)`\r\nIn SSR this method will cause a `<link rel=\"dns-prefetch\" href=\"...\" />`\r\nto flush before most other content both on intial flush (Shell) and late\r\nflushes. It will only emit one link per href.\r\n\r\nOn the client, this method will case the same kind of link to be\r\ninserted into the document immediately (when called during render, not\r\nduring commit) if there is not already a matching element in the\r\ndocument.\r\n\r\n### `ReactDOM.preconnect(href: string, options?: { crossOrigin?: string\r\n})`\r\nIn SSR this method will cause a `<link rel=\"dns-prefetch\" href=\"...\"\r\n[corssorigin=\"...\"] />` to flush before most other content both on\r\nintial flush (Shell) and late flushes. It will only emit one link per\r\nhref + crossorigin combo.\r\n\r\nOn the client, this method will case the same kind of link to be\r\ninserted into the document immediately (when called during render, not\r\nduring commit) if there is not already a matching element in the\r\ndocument.",
+                "distinct": true,
+                "url": "https://api.github.com/repos/facebook/react/commits/1173a17e6eea08599005e9f8e7d7a4245783edba"
+            }
+        ]
+    },
+    "public": true,
+    "created_at": "2023-02-25T19:04:58Z",
+    "org": {
+        "id": 69631,
+        "login": "facebook",
+        "gravatar_id": "",
+        "url": "https://api.github.com/orgs/facebook",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69631?"
+    }
+}
