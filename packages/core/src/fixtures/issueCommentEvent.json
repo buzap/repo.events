@@ -1,0 +1,152 @@
+{
+    "id": "27230235577",
+    "type": "IssueCommentEvent",
+    "actor": {
+        "id": 851105,
+        "login": "acstll",
+        "display_login": "acstll",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/acstll",
+        "avatar_url": "https://avatars.githubusercontent.com/u/851105?"
+    },
+    "repo": {
+        "id": 10270250,
+        "name": "facebook/react",
+        "url": "https://api.github.com/repos/facebook/react"
+    },
+    "payload": {
+        "action": "created",
+        "issue": {
+            "url": "https://api.github.com/repos/facebook/react/issues/11347",
+            "repository_url": "https://api.github.com/repos/facebook/react",
+            "labels_url": "https://api.github.com/repos/facebook/react/issues/11347/labels{/name}",
+            "comments_url": "https://api.github.com/repos/facebook/react/issues/11347/comments",
+            "events_url": "https://api.github.com/repos/facebook/react/issues/11347/events",
+            "html_url": "https://github.com/facebook/react/issues/11347",
+            "id": 267902244,
+            "node_id": "MDU6SXNzdWUyNjc5MDIyNDQ=",
+            "number": 11347,
+            "title": "RFC: Plan for custom element attributes/properties in React 19",
+            "user": {
+                "login": "robdodson",
+                "id": 1066253,
+                "node_id": "MDQ6VXNlcjEwNjYyNTM=",
+                "avatar_url": "https://avatars.githubusercontent.com/u/1066253?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/robdodson",
+                "html_url": "https://github.com/robdodson",
+                "followers_url": "https://api.github.com/users/robdodson/followers",
+                "following_url": "https://api.github.com/users/robdodson/following{/other_user}",
+                "gists_url": "https://api.github.com/users/robdodson/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/robdodson/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/robdodson/subscriptions",
+                "organizations_url": "https://api.github.com/users/robdodson/orgs",
+                "repos_url": "https://api.github.com/users/robdodson/repos",
+                "events_url": "https://api.github.com/users/robdodson/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/robdodson/received_events",
+                "type": "User",
+                "site_admin": false
+            },
+            "labels": [
+                {
+                    "id": 127893911,
+                    "node_id": "MDU6TGFiZWwxMjc4OTM5MTE=",
+                    "url": "https://api.github.com/repos/facebook/react/labels/Component:%20DOM",
+                    "name": "Component: DOM",
+                    "color": "fef2c0",
+                    "default": false,
+                    "description": null
+                },
+                {
+                    "id": 710375792,
+                    "node_id": "MDU6TGFiZWw3MTAzNzU3OTI=",
+                    "url": "https://api.github.com/repos/facebook/react/labels/Type:%20Discussion",
+                    "name": "Type: Discussion",
+                    "color": "fef2c0",
+                    "default": false,
+                    "description": null
+                }
+            ],
+            "state": "open",
+            "locked": false,
+            "assignee": null,
+            "assignees": [],
+            "milestone": null,
+            "comments": 249,
+            "created_at": "2017-10-24T05:28:49Z",
+            "updated_at": "2023-02-21T12:43:08Z",
+            "closed_at": null,
+            "author_association": "NONE",
+            "active_lock_reason": null,
+            "body": "This is meant to address #7249. The doc outlines the pros and cons of various approaches React could use to handle attributes and properties on custom elements.\r\n\r\n# TOC/Summary\r\n\r\n- Background\r\n- Proposals\r\n  * Option 1: Only set properties\r\n    + Pros\r\n      - Easy to understand/implement\r\n      - Avoids conflict with future global attributes\r\n      - Takes advantage of custom element \"upgrade\"\r\n      - Custom elements treated like any other React component\r\n    + Cons\r\n      - Possibly a breaking change\r\n      - Need ref to set attribute\r\n      - Not clear how server-side rendering would work\r\n  * Option 2: Properties-if-available\r\n    + Pros\r\n      - Non-breaking change\r\n    + Cons\r\n      - Developers need to understand the heuristic\r\n      - Falling back to attributes may conflict with future globals\r\n  * Option 3: Differentiate properties with a sigil\r\n    + Pros\r\n      - Non-breaking change that developers can opt-in to\r\n      - Similar to how other libraries handle attributes/properties\r\n      - The system is explicit\r\n    + Cons\r\n      - It’s new syntax\r\n      - Not clear how server-side rendering would work\r\n  * Option 4: Add an attributes object\r\n    + Pros\r\n      - The system is explicit\r\n      - Extending syntax may also solve issues with event handling\r\n    + Cons\r\n      - It’s new syntax\r\n      - It may be a breaking change\r\n      - It may be a larger change than any of the previous proposals\r\n  * Option 5: An API for consuming custom elements\r\n    + Pros\r\n      - The system is explicit\r\n      - Non-breaking change\r\n      - Idiomatic to React\r\n    + Cons\r\n      - Could be a lot of work for a complex component\r\n      - May bloat bundle size\r\n      - Config needs to keep pace with the component\r\n\r\n# Background\r\n\r\nWhen React tries to pass data to a custom element it always does so using HTML attributes.\r\n\r\n```jsx\r\n<x-foo bar={baz}> // same as setAttribute('bar', baz)\r\n```\r\n\r\nBecause attributes must be serialized to strings, this approach creates problems when the data being passed is an object or array. In that scenario, we end up with something like:\r\n\r\n```html\r\n<x-foo bar=\"[object Object]\">\r\n```\r\n\r\nThe workaround for this is to use a `ref` to manually set the property.\r\n\r\n```jsx\r\n<x-foo ref={el => el.bar = baz}>\r\n```\r\n\r\nThis workaround feels a bit unnecessary as the majority of custom elements being shipped today are written with libraries which automatically generate JavaScript properties that back all of their exposed attributes. And anyone hand-authoring a vanilla custom element is [encouraged to follow this practice](https://developers.google.com/web/fundamentals/web-components/best-practices#attributes-properties) as well. We'd like to ideally see runtime communication with custom elements in React use JavaScript properties by default.\r\n\r\nThis doc outlines a few proposals for how React could be updated to make this happen.\r\n\r\n# Proposals\r\n\r\n## Option 1: Only set properties\r\n\r\nRather than try to decide if a property or attribute should be set, React could *always* set properties on custom elements. React would **NOT** check to see if the property exists on the element beforehand.\r\n\r\n**Example:**\r\n\r\n```jsx\r\n<x-foo bar={baz}>\r\n```\r\n\r\nThe above code would result in React setting the `.bar` property of the `x-foo` element equal to the value of `baz`.\r\n\r\nFor camelCased property names, React could use the same style it uses today for properties like `tabIndex`.\r\n\r\n```jsx\r\n<x-foo squidInk={pasta}> // sets .squidInk = pasta\r\n```\r\n\r\n### Pros\r\n\r\n#### Easy to understand/implement\r\n\r\nThis model is simple, explicit, and dovetails with React’s [\"JavaScript-centric API to the DOM\"](https://reactjs.org/blog/2017/09/08/dom-attributes-in-react-16.html#why-are-we-changing-this).\r\n\r\nAny element created with libraries like Polymer or Skate will automatically generate properties to back their exposed attributes. These elements should all \"just work\" with the above approach. Developers hand-authoring vanilla components are encouraged to [back attributes with properties](https://developers.google.com/web/fundamentals/web-components/best-practices#always-accept-primitive-data-strings-numbers-booleans-as-either-attributes--or-properties) as that mirrors how *modern* (i.e. not oddballs like `<input>`) HTML5 elements (`<video>`, `<audio>`, etc.) have been implemented.\r\n\r\n#### Avoids conflict with future global attributes\r\n\r\nWhen React sets an attribute on a custom element there’s always the risk that a future version of HTML will ship a similarly named attribute and break things. This concern was [discussed with spec authors](https://github.com/w3c/webcomponents/issues/654) but there is no clear solution to the problem. Avoiding attributes entirely (except when a developer explicitly sets one using `ref`) may sidestep this issue until the browsers come up with a better solution.\r\n\r\n#### Takes advantage of custom element \"upgrade\"\r\n\r\nCustom elements can be lazily [upgraded](https://developers.google.com/web/fundamentals/web-components/customelements#upgrades) on the page and some PRPL patterns rely on this technique. During the upgrade process, a custom element can access the properties passed to it by React—even if those properties were set before the definition loaded—and use them to render initial state.\r\n\r\n#### Custom elements treated like any other React component\r\n\r\nWhen React components pass data to one another they already use properties. This would just make custom elements behave the same way.\r\n\r\n### Cons\r\n\r\n#### Possibly a breaking change\r\n\r\nIf a developer has been hand-authoring vanilla custom elements which only have an attributes API, then they will need to update their code or their app will break. The fix would be to use a `ref` to set the attribute (explained below).\r\n\r\n#### Need ref to set attribute\r\n\r\nBy changing the behavior so properties are preferred, it means developers will need to use a `ref` in order to explicitly set an attribute on a custom element.\r\n\r\n```jsx\r\n<custom-element ref={el => el.setAttribute('my-attr', val)} />\r\n```\r\n\r\nThis is just a reversal of the current behavior where developers need a `ref` in order to set a property. Since developers should rarely need to set attributes on custom elements, this seems like a reasonable trade-off.\r\n\r\n#### Not clear how server-side rendering would work\r\n\r\nIt's not clear how this model would map to server-side rendering custom elements. React could assume that the properties map to similarly named attributes and attempt to set those on the server, but this is far from bulletproof and would possibly require a heuristic for things like camelCased properties -> dash-cased attributes.\r\n\r\n## Option 2: Properties-if-available\r\n\r\nAt runtime React could attempt to detect if a property is present on a custom element. If the property is present React will use it, otherwise it will fallback to setting an attribute. This is the model Preact uses to deal with custom elements.\r\n\r\n**Pseudocode implementation:**\r\n\r\n```js\r\nif (propName in element) {\r\n  element[propName] = value;\r\n} else {\r\n  element.setAttribute(propName.toLowerCase(), value);\r\n}\r\n```\r\n\r\n**Possible steps:**\r\n\r\n* If an element has a defined property, React will use it.\r\n\r\n* If an element has an undefined property, and React is trying to pass it primitive data (string/number/boolean), it will use an attribute.\r\n\r\n    * Alternative: Warn and don’t set.\r\n\r\n* If an element has an undefined property, and React is trying to pass it an object/array it will set it as a property. This is because some-attr=\"[object Object]” is not useful.\r\n\r\n    * Alternative: Warn and don’t set.\r\n\r\n* If the element is being rendered on the server, and React is trying to pass it a string/number/boolean, it will use an attribute.\r\n\r\n* If the element is being rendered on the server, and React is trying to pass it a object/array, it will not do anything.\r\n\r\n### Pros\r\n\r\n#### Non-breaking change\r\n\r\nIt is possible to create a custom element that only uses attributes as its interface. This authoring style is **NOT** encouraged, but it may happen regardless. If a custom element author is relying on this behavior then this change would be non-breaking for them.\r\n\r\n### Cons\r\n\r\n#### Developers need to understand the heuristic\r\n\r\nDevelopers might be confused when React sets an attribute instead of a property depending on how they’ve chosen to load their element.\r\n\r\n#### Falling back to attributes may conflict with future globals\r\n\r\nSebastian [raised a concern](https://github.com/facebook/react/issues/10399#issuecomment-320847065) that using `in` to check for the existence of a property on a custom element might accidentally detect a property on the superclass (HTMLElement).\r\n\r\nThere are also other potential conflicts with global attributes [discussed previously](#avoids-conflict-with-future-global-attributes) in this doc.\r\n\r\n## Option 3: Differentiate properties with a sigil\r\n\r\nReact could continue setting attributes on custom elements, but provide a sigil that developers could use to explicitly set properties instead. This is similar to [the approach used by Glimmer.js](https://www.emberjs.com/blog/2017/10/10/glimmer-progress-report.html#toc_component-attributes).\r\n\r\n**Glimmer example:**\r\n\r\n```html\r\n<custom-img @src=\"corgi.jpg\" @hiResSrc=\"corgi@2x.jpg\" width=\"100%\">\r\n```\r\n\r\nIn the above example, the @ sigil indicates that `src` and `hiResSrc` should pass data to the custom element using properties, and `width` should be serialized to an attribute string.\r\n\r\nBecause React components already pass data to one another using properties, there would be no need for them to use the sigil (although it would work if they did, it would just be redundant). Instead, it would primarily be used as an explicit instruction to pass data to a custom element using JavaScript properties.\r\n\r\n*h/t to @developit of Preact for suggesting this approach :)*\r\n\r\n### Pros\r\n\r\n#### Non-breaking change that developers can opt-in to\r\n\r\nAll pre-existing React + custom element apps would continue to work exactly as they have. Developers could choose if they wanted to update their code to use the new sigil style.\r\n\r\n#### Similar to how other libraries handle attributes/properties\r\n\r\nSimilar to Glimmer, both Angular and Vue use modifiers to differentiate between attributes and properties.\r\n\r\n**Vue example:**\r\n\r\n```html\r\n<!-- Vue will serialize `foo` to an attribute string, and set `squid` using a JavaScript property -->\r\n<custom-element :foo=\"bar” :squid.prop=”ink”>\r\n```\r\n\r\n**Angular example:**\r\n\r\n```html\r\n<!-- Angular will serialize `foo` to an attribute string, and set `squid` using a JavaScript property -->\r\n<custom-element [attr.foo]=\"bar” [squid]=”ink”>\r\n```\r\n\r\n#### The system is explicit\r\n\r\nDevelopers can tell React exactly what they want instead of relying on a heuristic like the [properties-if-available](#option-2--properties-if-available) approach.\r\n\r\n### Cons\r\n\r\n#### It’s new syntax\r\n\r\nDevelopers need to be taught how to use it and it needs to be thoroughly tested to make sure it is backwards compatible.\r\n\r\n#### Not clear how server-side rendering would work\r\n\r\nShould the sigil switch to using a similarly named attribute?\r\n\r\n## Option 4: Add an attributes object\r\n\r\nReact could add additional syntax which lets authors explicitly pass data as attributes. If developers do not use this attributes object, then their data will be passed using JavaScript properties.\r\n\r\n**Example:**\r\n\r\n```jsx\r\nconst bar = 'baz';\r\nconst hello = 'World';\r\nconst width = '100%';\r\nconst ReactElement = <Test\r\n  foo={bar} // uses JavaScript property\r\n  attrs={{ hello, width }} // serialized to attributes\r\n/>;\r\n```\r\n\r\nThis idea was [originally proposed](https://gist.github.com/treshugart/2fb509a8828adf7fee5245bfa2a54ba7) by @treshugart, author of Skate.js, and is implemented in the [val](https://github.com/skatejs/val) library.\r\n\r\n### Pros\r\n\r\n#### The system is explicit\r\n\r\nDevelopers can tell React exactly what they want instead of relying on a heuristic like the [properties-if-available](#option-2--properties-if-available) approach.\r\n\r\n#### Extending syntax may also solve issues with event handling\r\n\r\n*Note: This is outside the scope of this document but maybe worth mentioning :)*\r\n\r\nIssue [#7901](https://github.com/facebook/react/issues/7901) requests that React bypass its synthetic event system when declarative event handlers are added to custom elements. Because custom element event names are arbitrary strings, it means they can be capitalized in any fashion. To bypass the synthetic event system today will also mean needing to come up with a heuristic for mapping event names from JSX to `addEventListener`.\r\n\r\n```js\r\n// should this listen for: 'foobar', 'FooBar', or 'fooBar'?\r\nonFooBar={handleFooBar}\r\n```\r\n\r\nHowever, if the syntax is extended to allow attributes it could also be extended to allow events as well:\r\n\r\n```js\r\nconst bar = 'baz';\r\nconst hello = 'World';\r\nconst SquidChanged = e => console.log('yo');\r\nconst ReactElement = <Test\r\n  foo={bar}\r\n  attrs={{ hello }}\r\n  events={{ SquidChanged}} // addEventListener('SquidChanged', …)\r\n/>;\r\n```\r\n\r\nIn this model the variable name is used as the event name. No heuristic is needed.\r\n\r\n### Cons\r\n\r\n#### It’s new syntax\r\n\r\nDevelopers need to be taught how to use it and it needs to be thoroughly tested to make sure it is backwards compatible.\r\n\r\n#### It may be a breaking change\r\n\r\nIf any components already rely on properties named `attrs` or `events`, it could break them.\r\n\r\n#### It may be a larger change than any of the previous proposals\r\n\r\nFor React 17 it may be easier to make an incremental change (like one of the previous proposals) and position this proposal as something to take under consideration for a later, bigger refactor.\r\n\r\n## Option 5: An API for consuming custom elements\r\n\r\n*This proposal was offered by @sophiebits and @gaearon from the React team*\r\n\r\nReact could create a new API for consuming custom elements that maps the element’s behavior with a configuration object.\r\n\r\n**Pseudocode example:**\r\n\r\n```js\r\nconst XFoo = ReactDOM.createCustomElementType({\r\n  element: ‘x-foo’,\r\n  ‘my-attr’: // something that tells React what to do with it\r\n  someRichDataProp: // something that tells React what to do with it\r\n});\r\n```\r\n\r\nThe above code returns a proxy component, `XFoo` that knows how to pass data to a custom element depending on the configuration you provide. You would use this proxy component in your app instead of using the custom element directly.\r\n\r\n**Example usage:**\r\n\r\n```jsx\r\n<XFoo someRichDataProp={...} />\r\n```\r\n\r\n### Pros\r\n\r\n#### The system is explicit\r\n\r\nDevelopers can tell React the exact behavior they want.\r\n\r\n#### Non-breaking change\r\n\r\nDevelopers can opt-in to using the object or continue using the current system.\r\n\r\n#### Idiomatic to React\r\n\r\nThis change doesn’t require new JSX syntax, and feels more like other APIs in React. For example, PropTypes (even though it’s being moved into its own package) has a somewhat similar approach.\r\n\r\n### Cons\r\n\r\n#### Could be a lot of work for a complex component\r\n\r\nPolymer’s [paper-input](https://www.webcomponents.org/element/PolymerElements/paper-input/elements/paper-input) element has 37 properties, so it would produce a very large config. If developers are using a lot of custom elements in their app, that may equal a lot of configs they need to write.\r\n\r\n#### May bloat bundle size\r\n\r\nRelated to the above point, each custom element class now incurs the cost of its definition + its config object size.\r\n\r\n*Note: I'm not 100% sure if this is true. Someone more familiar with the React build process could verify.*\r\n\r\n#### Config needs to keep pace with the component\r\n\r\nEvery time the component does a minor version revision that adds a new property, the config will need to be updated as well. That’s not difficult, but it does add maintenance. Maybe if configs are generated from source this is less of a burden, but that may mean needing to create a new tool to generate configs for each web component library.\r\n\r\n\r\ncc @sebmarkbage @gaearon @developit @treshugart @justinfagnani",
+            "reactions": {
+                "url": "https://api.github.com/repos/facebook/react/issues/11347/reactions",
+                "total_count": 463,
+                "+1": 270,
+                "-1": 0,
+                "laugh": 0,
+                "hooray": 39,
+                "confused": 0,
+                "heart": 107,
+                "rocket": 30,
+                "eyes": 17
+            },
+            "timeline_url": "https://api.github.com/repos/facebook/react/issues/11347/timeline",
+            "performed_via_github_app": null,
+            "state_reason": null
+        },
+        "comment": {
+            "url": "https://api.github.com/repos/facebook/react/issues/comments/1438417606",
+            "html_url": "https://github.com/facebook/react/issues/11347#issuecomment-1438417606",
+            "issue_url": "https://api.github.com/repos/facebook/react/issues/11347",
+            "id": 1438417606,
+            "node_id": "IC_kwDOAJy2Ks5VvILG",
+            "user": {
+                "login": "acstll",
+                "id": 851105,
+                "node_id": "MDQ6VXNlcjg1MTEwNQ==",
+                "avatar_url": "https://avatars.githubusercontent.com/u/851105?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/acstll",
+                "html_url": "https://github.com/acstll",
+                "followers_url": "https://api.github.com/users/acstll/followers",
+                "following_url": "https://api.github.com/users/acstll/following{/other_user}",
+                "gists_url": "https://api.github.com/users/acstll/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/acstll/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/acstll/subscriptions",
+                "organizations_url": "https://api.github.com/users/acstll/orgs",
+                "repos_url": "https://api.github.com/users/acstll/repos",
+                "events_url": "https://api.github.com/users/acstll/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/acstll/received_events",
+                "type": "User",
+                "site_admin": false
+            },
+            "created_at": "2023-02-21T12:43:08Z",
+            "updated_at": "2023-02-21T12:43:08Z",
+            "author_association": "NONE",
+            "body": "> > When the React team ships 19, this should be included.\r\n> \r\n> The big question I have for the maintainers is when might the v19.0.0 release be coming.\r\n\r\nThe actual big question is whether they will actually include *this* in v19. I hope I'm wrong but I have zero hopes this will EVER get released.",
+            "reactions": {
+                "url": "https://api.github.com/repos/facebook/react/issues/comments/1438417606/reactions",
+                "total_count": 0,
+                "+1": 0,
+                "-1": 0,
+                "laugh": 0,
+                "hooray": 0,
+                "confused": 0,
+                "heart": 0,
+                "rocket": 0,
+                "eyes": 0
+            },
+            "performed_via_github_app": null
+        }
+    },
+    "public": true,
+    "created_at": "2023-02-21T12:43:09Z",
+    "org": {
+        "id": 69631,
+        "login": "facebook",
+        "gravatar_id": "",
+        "url": "https://api.github.com/orgs/facebook",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69631?"
+    }
+}
