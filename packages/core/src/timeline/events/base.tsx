@@ -1,4 +1,3 @@
-import React from 'react'
 import css from '@styled-system/css'
 import styled from 'styled-components'
 import { Box, Link, SxProp, Avatar, Text, RelativeTime, themeGet } from '@primer/react'
