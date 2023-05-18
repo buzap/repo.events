@@ -10,6 +10,8 @@ interface OctokitInfo {
     authenticated: boolean
 }
 
+const UserSettingKeyPrefix = 'us.'
+
 export default function Page(props: { params: { owner: string; repo: string } }) {
     const router = useRouter()
     const { owner, repo } = router.query
@@ -22,7 +24,7 @@ export default function Page(props: { params: { owner: string; repo: string } })
 
     useEffect(() => {
         const settings: Settings = {
-            personalAccessToken: localStorage.getItem('personalAccessToken'),
+            personalAccessToken: localStorage.getItem(UserSettingKeyPrefix + 'personalAccessToken'),
         }
         setSettings(settings)
         const octo: OctokitInfo = {
@@ -47,7 +49,7 @@ export default function Page(props: { params: { owner: string; repo: string } })
 
         for (const [key, value] of Object.entries(transientSettings.current)) {
             if (value === null || value === undefined) {
-                localStorage.removeItem(key)
+                localStorage.removeItem(UserSettingKeyPrefix + key)
                 return
             }
             let v: string
@@ -58,7 +60,7 @@ export default function Page(props: { params: { owner: string; repo: string } })
             } else {
                 v = JSON.stringify(value)
             }
-            localStorage.setItem(key, v)
+            localStorage.setItem(UserSettingKeyPrefix + key, v)
         }
         setSettings((original) => {
             return { ...original, ...transientSettings.current }

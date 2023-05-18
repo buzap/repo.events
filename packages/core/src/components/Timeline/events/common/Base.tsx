@@ -23,7 +23,7 @@ export function Base(props: BaseProps) {
 
     return (
         <Box>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Box as="span" sx={{ flexGrow: 1 }}>
                     <Actor actor={props.event.actor} />
                     <Text sx={{ ml: 1, color: 'fg.muted' }}>{props.description}</Text>
@@ -31,7 +31,7 @@ export function Base(props: BaseProps) {
                 <RelativeTime
                     datetime={event.created_at || ''}
                     title={event.created_at || ''}
-                    sx={{ color: 'fg.muted' }}
+                    sx={{ color: 'fg.muted', ml: '34px' }}
                 />
             </Box>
             <Box sx={{ ml: '34px' }}>

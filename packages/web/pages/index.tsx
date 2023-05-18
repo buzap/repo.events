@@ -1,5 +1,4 @@
 import { Box } from '@primer/react'
-import { Intro } from '@/components/Intro'
 import { RepoInput, RepoInputChangeEvent } from '@/components/RepoInput'
 import { useCallback } from 'react'
 import { useRouter } from 'next/router'
@@ -14,11 +13,17 @@ export default function Home() {
     )
 
     return (
-        <Box sx={{ minHeight: '100%', backgroundColor: 'canvas.default' }}>
-            <Intro />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <RepoInput onChange={onInputChange} sx={{ width: '750px', maxWidth: '90vw' }} />
-            </Box>
+        <Box
+            sx={{
+                backgroundColor: 'canvas.default',
+                position: 'absolute',
+                width: '100%',
+                minHeight: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+            }}
+        >
+            <RepoInput onChange={onInputChange} sx={{ marginTop: '30vh', width: '750px', maxWidth: '90vw' }} />
         </Box>
     )
 }

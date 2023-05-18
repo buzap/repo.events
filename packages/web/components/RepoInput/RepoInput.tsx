@@ -53,10 +53,7 @@ export function RepoInput(props: RepoInputProps) {
         onChange(value, 'input')
     }, [onChange, value])
 
-    const [shownSuggestions, setShowSuggestions] = useState<string[]>(() => {
-        // don't use getRandomRepoNames() or we will encounter the nextjs hydration issue
-        return github100.slice(0, 3)
-    })
+    const [shownSuggestions, setShowSuggestions] = useState<string[]>(['golang/go', 'microsoft/vscode', 'apple/swift'])
     const changeSuggestions = useCallback(() => {
         setShowSuggestions(getRandomRepoNames())
     }, [])
@@ -80,12 +77,23 @@ export function RepoInput(props: RepoInputProps) {
                         borderWidth: '1',
                         borderStyle: 'solid',
                         borderRadius: '6px 0 0 6px',
-                        height: '50px',
+                        height: '40px',
                         verticalAlign: 'bottom',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
                     }}
                 >
                     <StyledOcticon icon={MarkGithubIcon} size={18} />
-                    <Text sx={{ fontSize: 3, paddingLeft: 3, paddingRight: 2 }}>github.com /</Text>
+                    <Text
+                        sx={{
+                            fontSize: 2,
+                            paddingLeft: [1, 1, 2, 3],
+                            paddingRight: 2,
+                        }}
+                    >
+                        github.com /
+                    </Text>
                 </Box>
                 <TextInput
                     id="repo-name"
@@ -103,16 +111,17 @@ export function RepoInput(props: RepoInputProps) {
                     }
                     aria-describedby="repo-name-hint"
                     aria-invalid={!isValid}
-                    sx={{ flexGrow: 1, borderTopLeftRadius: 0, borderBottomLeftRadius: 0, height: '50px', fontSize: 3 }}
+                    sx={{ flexGrow: 1, borderTopLeftRadius: 0, borderBottomLeftRadius: 0, height: '40px', fontSize: 2 }}
                 />
             </Box>
             <FormControl.Caption id="repo-name-hint" sx={{ fontSize: 2, paddingTop: 2 }}>
                 <IconButton
                     icon={SyncIcon}
                     size="small"
+                    variant="invisible"
                     onClick={changeSuggestions}
                     aria-label="change suggestions"
-                    sx={{ mr: 1 }}
+                    sx={{ mr: 1, verticalAlign: 'middle' }}
                 />
                 Try these
                 {shownSuggestions.map((s) => (

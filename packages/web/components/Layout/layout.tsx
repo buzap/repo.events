@@ -18,11 +18,11 @@ export function Layout(props: LayoutProps) {
                 </Header.Item>
                 <Header.Item sx={{ mr: 0 }}>
                     <Link href="https://github.com/buzap/repo.event" target="_blank">
-                        <MarkGithubIcon size={24} />
+                        <MarkGithubIcon size={20} />
                     </Link>
                 </Header.Item>
             </Header>
-            <Box as="main" sx={{ alignSelf: 'stretch', flexGrow: 1, backgroundColor: 'canvas.default' }}>
+            <Box as="main" sx={{ flexGrow: 1, backgroundColor: 'canvas.default', position: 'relative' }}>
                 {props.children}
             </Box>
         </Box>

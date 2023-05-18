@@ -13,8 +13,6 @@ export const Default: Story = {
     args: {
         owner: 'golang',
         repo: 'go',
-        octokit: new Octokit({
-            auth: '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',
-        }),
+        octokit: new Octokit(),
     },
 }
