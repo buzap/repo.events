@@ -13,7 +13,7 @@ export function Layout(props: LayoutProps) {
             <Header>
                 <Header.Item full>
                     <Link href="/">
-                        <Text sx={{ fontWeight: 'bold' }}>Repo.Event</Text>
+                        <Text sx={{ fontWeight: 'bold' }}>Repo.Events</Text>
                     </Link>
                 </Header.Item>
                 <Header.Item sx={{ mr: 0 }}>
