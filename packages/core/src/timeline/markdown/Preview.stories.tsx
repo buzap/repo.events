@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { MarkdownPreview } from './preview'
+import { MarkdownPreview } from './Preview'
 
 export default {
     title: 'timeline/markdown/MarkdownPreview',

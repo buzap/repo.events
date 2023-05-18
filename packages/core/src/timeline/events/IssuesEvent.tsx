@@ -1,7 +1,7 @@
 import { IssueOpenedIcon, IssueClosedIcon } from '@primer/octicons-react'
 import { SxProp, StyledOcticon, Link } from '@primer/react'
 import { GithubEvent } from '../../types/github'
-import { Base } from './base'
+import { Base } from './Base'
 
 export interface IssuesEventProps extends SxProp {
     event: GithubEvent

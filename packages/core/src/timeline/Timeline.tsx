@@ -1,8 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
-import { SxProp, Box, TabNav, Button } from '@primer/react'
+import { SxProp, Box, TabNav } from '@primer/react'
 import { Octokit } from 'octokit'
 import { GithubEvent } from '../types/github'
 import { EventRow } from './EventRow'
+import { LoadDrive } from './LoadDrive'
 
 export interface TimelineProps extends SxProp {
     owner: string
@@ -50,7 +51,7 @@ export function Timeline(props: TimelineProps) {
                 {events.map((event) => (
                     <EventRow key={event.id} event={event} />
                 ))}
-                <Button onClick={iterator.next}>Load</Button>
+                <LoadDrive requestLoad={iterator.next} maxAutomaticLoad={5} sx={{ marginTop: 3 }} />
             </Box>
         </Box>
     )

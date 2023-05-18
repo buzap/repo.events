@@ -1,8 +1,8 @@
 import { SxProp } from '@primer/react'
 import { GithubEvent, PushEvent as PushEventData } from '../types/github'
-import { IssuesEvent } from './events/issuesEvent'
-import { IssueCommentEvent } from './events/issueCommentEvent'
-import { PushEvent } from './events/pushEvent'
+import { IssuesEvent } from './events/IssuesEvent'
+import { IssueCommentEvent } from './events/IssueCommentEvent'
+import { PushEvent } from './events/PushEvent'
 import { PullRequestEvent } from './events/PullRequestEvent'
 
 export interface EventRowProps extends SxProp {
@@ -22,7 +22,7 @@ export function EventRow(props: EventRowProps) {
         case 'PullRequestEvent':
             return <PullRequestEvent {...props} />
         default:
-            console.error(`unkown event type ${props.event.type}`, props.event)
+            console.warn(`unkown event type ${props.event.type}`, props.event)
             return null
     }
 }

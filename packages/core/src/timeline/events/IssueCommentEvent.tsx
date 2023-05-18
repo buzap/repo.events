@@ -1,7 +1,7 @@
 import { SxProp, StyledOcticon, Link } from '@primer/react'
 import { CommentIcon } from '@primer/octicons-react'
 import { GithubEvent } from '../../types/github'
-import { Base } from './base'
+import { Base } from './Base'
 
 export interface IssueCommentEventProps extends SxProp {
     event: GithubEvent

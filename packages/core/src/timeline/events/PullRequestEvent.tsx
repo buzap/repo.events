@@ -1,7 +1,7 @@
 import { SxProp, StyledOcticon, Link } from '@primer/react'
 import { GitPullRequestIcon, GitPullRequestClosedIcon } from '@primer/octicons-react'
 import { GithubEvent, PullRequestEventPayload } from '../../types/github'
-import { Base } from './base'
+import { Base } from './Base'
 
 export interface PullRequestEventProps extends SxProp {
     event: GithubEvent
