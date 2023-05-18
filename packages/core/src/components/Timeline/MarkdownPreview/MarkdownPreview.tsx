@@ -43,6 +43,10 @@ const Container = styled.div`
         }
     }
 
+    img {
+        display: none;
+    }
+
     strong {
         color: ${(props) => themeGet('colors.fg.default')(props)};
         font-weight: ${(props) => themeGet('fontWeights.normal')(props)};
