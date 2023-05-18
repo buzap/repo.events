@@ -1,4 +1,3 @@
-import React from 'react'
 import { SxProp, StyledOcticon, BranchName, Link } from '@primer/react'
 import { CommitIcon } from '@primer/octicons-react'
 import { AnyEvent, PushEvent as PushEventData } from '../../types/github'

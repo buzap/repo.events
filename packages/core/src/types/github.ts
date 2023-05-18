@@ -2,12 +2,14 @@ import { components } from '@octokit/openapi-types'
 
 export type GithubEvent = components['schemas']['event']
 
-export type AnyEvent = Omit<GithubEvent, 'payload'> & { payload: any }
+export type AnyEvent = Omit<GithubEvent, 'payload'> & { payload: unknown }
 
 export type PushEvent = Omit<GithubEvent, 'type' | 'payload'> & {
     type: 'PushEvent'
     payload: PushEventPayload
 }
+
+export type PullRequest = components['schemas']['webhook-pull-request-opened']['pull_request']
 
 export interface PushEventPayload {
     repository_id: number
@@ -29,4 +31,32 @@ export interface PushEventPayload_Commit {
         name: string
         email: string
     }
+}
+
+export type PullRequestEventAction =
+    | 'opened'
+    | 'edited'
+    | 'closed'
+    | 'reopened'
+    | 'assigned'
+    | 'unassigned'
+    | 'review_request'
+    | 'review_request_removed'
+    | 'labeled'
+    | 'unlabeled'
+    | 'synchronize'
+
+export interface PullRequestEventPayload {
+    action: PullRequestEventAction
+    number: number
+    changes?: {
+        title: {
+            from: string
+        }
+        body: {
+            from: string
+        }
+    }
+    pull_request: PullRequest
+    reason: string
 }

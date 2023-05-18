@@ -3,12 +3,32 @@ import { SxProp, Box, Text, TextInput, FormControl, StyledOcticon, Link, IconBut
 import { MarkGithubIcon, CheckIcon, SyncIcon } from '@primer/octicons-react'
 import github100 from './github100.json'
 
+const repoNamePattern = /^[\w.-]+\/[\w.-]+$/
+
+export interface RepoInputChangeEvent {
+    owner: string
+    repo: string
+    from: 'input' | 'suggestion'
+}
+
 export interface RepoInputProps extends SxProp {
-    onChange: (event: { value: string; from: 'input' | 'suggestion' }) => void
+    onChange: (event: RepoInputChangeEvent) => void
 }
 
 export function RepoInput(props: RepoInputProps) {
-    const { onChange } = props
+    const { onChange: originalOnChange } = props
+    const onChange = useCallback(
+        (value: string, from: RepoInputChangeEvent['from']) => {
+            const parts = value.split('/', 2)
+            const event: RepoInputChangeEvent = {
+                owner: parts[0] || '',
+                repo: parts[1] || '',
+                from: from,
+            }
+            originalOnChange(event)
+        },
+        [originalOnChange]
+    )
 
     const [value, setValue] = useState<string>('')
     const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +42,7 @@ export function RepoInput(props: RepoInputProps) {
             if (!isValidRepoName(value)) {
                 return
             }
-            onChange({ value, from: 'input' })
+            onChange(value, 'input')
         },
         [onChange, value]
     )
@@ -30,7 +50,7 @@ export function RepoInput(props: RepoInputProps) {
         if (!isValidRepoName(value)) {
             return
         }
-        onChange({ value, from: 'input' })
+        onChange(value, 'input')
     }, [onChange, value])
 
     const [shownSuggestions, setShowSuggestions] = useState<string[]>(() => {
@@ -96,11 +116,7 @@ export function RepoInput(props: RepoInputProps) {
                 />
                 Try these
                 {shownSuggestions.map((s) => (
-                    <Link
-                        key={s}
-                        onClick={() => onChange({ value: s, from: 'suggestion' })}
-                        sx={{ ml: 2, cursor: 'pointer' }}
-                    >
+                    <Link key={s} onClick={() => onChange(s, 'suggestion')} sx={{ ml: 2, cursor: 'pointer' }}>
                         {s}
                     </Link>
                 ))}
@@ -108,8 +124,6 @@ export function RepoInput(props: RepoInputProps) {
         </FormControl>
     )
 }
-
-const repoNamePattern = /^[\w.-]+\/[\w.-]+$/
 
 function isValidRepoName(s: string): boolean {
     return repoNamePattern.test(s)

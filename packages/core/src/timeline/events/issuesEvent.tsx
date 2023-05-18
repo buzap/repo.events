@@ -1,4 +1,3 @@
-import React from 'react'
 import { IssueOpenedIcon, IssueClosedIcon } from '@primer/octicons-react'
 import { SxProp, StyledOcticon, Link } from '@primer/react'
 import { GithubEvent } from '../../types/github'
