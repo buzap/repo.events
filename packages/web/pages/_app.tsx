@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { ThemeProvider } from '@primer/react'
-import { Layout } from '@/components/layout'
+import { ThemeProvider, BaseStyles } from '@primer/react'
+import { Layout } from '@/components/Layout'
 import './_app.css'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -12,10 +12,12 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="description" content="See what's happening in a github repository at a glance" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ThemeProvider>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+            <ThemeProvider colorMode="dark">
+                <BaseStyles>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </BaseStyles>
             </ThemeProvider>
         </>
     )

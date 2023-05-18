@@ -1,5 +1,6 @@
 import React from 'react'
-import { Header } from '@primer/react'
+import { Header, Text, Box } from '@primer/react'
+import { MarkGithubIcon } from '@primer/octicons-react'
 import Link from 'next/link'
 
 export interface LayoutProps {
@@ -8,13 +9,22 @@ export interface LayoutProps {
 
 export function Layout(props: LayoutProps) {
     return (
-        <>
+        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Header>
-                <Header.Item>
-                    <Link href="/">Repo.Event</Link>
+                <Header.Item full>
+                    <Link href="/">
+                        <Text sx={{ fontWeight: 'bold' }}>Repo.Event</Text>
+                    </Link>
+                </Header.Item>
+                <Header.Item sx={{ mr: 0 }}>
+                    <Link href="https://github.com/buzap/repo.event" target="_blank">
+                        <MarkGithubIcon size={24} />
+                    </Link>
                 </Header.Item>
             </Header>
-            <main>{props.children}</main>
-        </>
+            <Box as="main" sx={{ alignSelf: 'stretch', flexGrow: 1, backgroundColor: 'canvas.default' }}>
+                {props.children}
+            </Box>
+        </Box>
     )
 }
