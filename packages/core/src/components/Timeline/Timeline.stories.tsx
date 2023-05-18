@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Timeline } from './Timeline'
 
 export default {
-    title: 'timeline/Timeline',
+    title: 'components/Timeline/Timeline',
     component: Timeline,
 } as Meta<typeof Timeline>
 

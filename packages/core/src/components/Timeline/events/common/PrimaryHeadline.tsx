@@ -1,5 +1,6 @@
 import { Box, StateLabelProps, SxProp } from '@primer/react'
-import { StateLabel, PrimaryLink } from '../../../components'
+import { StateLabel } from '../../../StateLabel'
+import { PrimaryLink } from '../../../PrimaryLink'
 
 export interface PrimaryHeadlineProps extends SxProp {
     status: StateLabelProps['status']

@@ -1,2 +1,2 @@
-export * from './timeline'
+export * from './components'
 export * from './types/github'

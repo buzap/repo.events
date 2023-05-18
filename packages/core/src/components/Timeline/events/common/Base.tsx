@@ -1,7 +1,7 @@
 import { Box, SxProp, RelativeTime, Text } from '@primer/react'
-import { GithubEvent } from '../../types/github'
-import { MarkdownPreview } from '../markdown'
-import { Actor } from '../../components'
+import { GithubEvent } from '../../../../types/github'
+import { MarkdownPreview } from '../../markdown'
+import { Actor } from '../../../Actor'
 
 export interface BaseProps extends SxProp {
     event: GithubEvent

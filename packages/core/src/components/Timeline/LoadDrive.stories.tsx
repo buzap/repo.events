@@ -4,7 +4,7 @@ import { Box } from '@primer/react'
 import { LoadDrive } from './LoadDrive'
 
 export default {
-    title: 'timeline/LoadDrive',
+    title: 'components/Timeline/LoadDrive',
     component: LoadDrive,
 } as Meta<typeof LoadDrive>
 

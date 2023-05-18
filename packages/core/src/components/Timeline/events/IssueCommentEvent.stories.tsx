@@ -1,11 +1,11 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { GithubEvent } from '../../types/github'
-import issueCommentEventSample from '../../fixtures/issueCommentEvent.json'
-import { IssueCommentEvent } from './issueCommentEvent'
+import { GithubEvent } from '../../../types/github'
+import issueCommentEventSample from '../../../fixtures/issueCommentEvent.json'
+import { IssueCommentEvent } from './IssueCommentEvent'
 
 export default {
-    title: 'timeline/events/IssueCommentEvent',
+    title: 'components/Timeline/events/IssueCommentEvent',
     component: IssueCommentEvent,
 } as Meta<typeof IssueCommentEvent>
 

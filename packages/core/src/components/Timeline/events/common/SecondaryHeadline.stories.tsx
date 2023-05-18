@@ -3,7 +3,7 @@ import { SecondaryHeadline } from './SecondaryHeadline'
 import { CommentIcon } from '@primer/octicons-react'
 
 export default {
-    title: 'timeline/events/common/SecondaryHeadline',
+    title: 'components/Timeline/events/common/SecondaryHeadline',
     component: SecondaryHeadline,
 } as Meta<typeof SecondaryHeadline>
 

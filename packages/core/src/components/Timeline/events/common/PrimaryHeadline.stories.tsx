@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { PrimaryHeadline } from './PrimaryHeadline'
 
 export default {
-    title: 'timeline/events/common/PrimaryHeadline',
+    title: 'components/Timeline/events/common/PrimaryHeadline',
     component: PrimaryHeadline,
 } as Meta<typeof PrimaryHeadline>
 

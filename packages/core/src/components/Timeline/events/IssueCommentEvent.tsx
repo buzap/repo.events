@@ -1,6 +1,6 @@
 import { SxProp } from '@primer/react'
-import { GithubEvent } from '../../types/github'
-import { Base } from './Base'
+import { GithubEvent } from '../../../types/github'
+import { Base } from './common/Base'
 import { SecondaryHeadline } from './common'
 import { CommentIcon } from '@primer/octicons-react'
 

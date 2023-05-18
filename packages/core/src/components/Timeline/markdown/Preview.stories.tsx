@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { MarkdownPreview } from './Preview'
 
 export default {
-    title: 'timeline/markdown/MarkdownPreview',
+    title: 'components/Timeline/markdown/MarkdownPreview',
     component: MarkdownPreview,
 } as Meta<typeof MarkdownPreview>
 

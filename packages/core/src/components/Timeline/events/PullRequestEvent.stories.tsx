@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { PullRequestEvent } from './PullRequestEvent'
-import pullRequestOpened from '../../fixtures/pullRequestOpenedEvent.json'
-import pullRequestClosed from '../../fixtures/pullRequestClosedEvent.json'
+import pullRequestOpened from '../../../fixtures/pullRequestOpenedEvent.json'
+import pullRequestClosed from '../../../fixtures/pullRequestClosedEvent.json'
 
 export default {
-    title: 'timeline/events/PullRequestEvent',
+    title: 'components/Timeline/events/PullRequestEvent',
     component: PullRequestEvent,
 } as Meta<typeof PullRequestEvent>
 

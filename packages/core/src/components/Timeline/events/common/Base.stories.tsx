@@ -1,11 +1,11 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import issueOpenedEventSample from '../../fixtures/issueOpenedEvent.json'
-import { Base } from './base'
-import { PrimaryHeadline } from './common'
+import issueOpenedEventSample from '../../../../fixtures/issueOpenedEvent.json'
+import { Base } from './Base'
+import { PrimaryHeadline } from './PrimaryHeadline'
 
 export default {
-    title: 'timeline/events/Base',
+    title: 'components/Timeline/events/common/Base',
     component: Base,
 } as Meta<typeof Base>
 
