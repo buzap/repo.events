@@ -13,7 +13,7 @@ export function Timeline(props: TimelineProps) {
     const [events, setEvents] = useState<GithubEvent[]>([])
 
     const iterator = useMemo(() => {
-        const octo = new Octokit()
+        const octo = new Octokit({})
         const req = octo.paginate.iterator(octo.rest.activity.listRepoEvents, {
             owner: props.owner,
             repo: props.repo,
@@ -40,7 +40,9 @@ export function Timeline(props: TimelineProps) {
     return (
         <Box sx={props.sx}>
             <TabNav>
-                <TabNav.Link href="#">All</TabNav.Link>
+                <TabNav.Link href="#" selected>
+                    All
+                </TabNav.Link>
                 <TabNav.Link href="#">Push</TabNav.Link>
                 <TabNav.Link href="#">Issues</TabNav.Link>
             </TabNav>
