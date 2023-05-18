@@ -44,7 +44,7 @@ export function PullRequestEvent(props: PullRequestEventProps) {
             headline={
                 <PrimaryHeadline status={status} title={pr.title} trailingText={`#${pr.number}`} url={pr.html_url} />
             }
-            details={details}
+            markdownDetails={details}
         />
     )
 }

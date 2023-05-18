@@ -22,6 +22,7 @@ importers:
       '@storybook/react-vite': ^7.0.7
       '@storybook/testing-library': ^0.0.14-next.2
       '@styled-system/css': ^5.1.5
+      '@types/dompurify': ^3.0.2
       '@types/jest': ^29.5.1
       '@types/marked': ^4.0.8
       '@types/react': ^18.0.28
@@ -36,6 +37,7 @@ importers:
       babel-plugin-macros: ^3.1.0
       babel-plugin-preval: ^5.1.0
       babel-plugin-styled-components: ^2.1.1
+      dompurify: ^3.0.3
       eslint: ^8.38.0
       eslint-plugin-react-hooks: ^4.6.0
       eslint-plugin-react-refresh: ^0.3.4
@@ -60,6 +62,7 @@ importers:
       '@primer/octicons-react': 18.3.0_react@18.2.0
       '@primer/react': 35.25.1_hcx6qw6l7iiqminquzlcszwrmq
       '@styled-system/css': 5.1.5
+      dompurify: 3.0.3
       marked: 4.3.0
       octokit: 2.0.14
       styled-system: 5.1.5
@@ -78,6 +81,7 @@ importers:
       '@storybook/react': 7.0.7_tvrvbu6r5w7oyqiu4bvze3slou
       '@storybook/react-vite': 7.0.7_atm6g3g7uehfkad32xdu772yf4
       '@storybook/testing-library': 0.0.14-next.2
+      '@types/dompurify': 3.0.2
       '@types/jest': 29.5.1
       '@types/marked': 4.0.8
       '@types/react': 18.2.0
@@ -4085,6 +4089,12 @@ packages:
     resolution: {integrity: sha512-w5jZ0ee+HaPOaX25X2/2oGR/7rgAQSYII7X7pp0m9KgBfMP7uKfMfTvcpl5Dj+eDBbpxKGiqE+flqDr6XTd2RA==}
     dev: true
 
+  /@types/dompurify/3.0.2:
+    resolution: {integrity: sha512-YBL4ziFebbbfQfH5mlC+QTJsvh0oJUrWbmxKMyEdL7emlHJqGR2Qb34TEFKj+VCayBvjKy3xczMFNhugThUsfQ==}
+    dependencies:
+      '@types/trusted-types': 2.0.3
+    dev: true
+
   /@types/ejs/3.1.2:
     resolution: {integrity: sha512-ZmiaE3wglXVWBM9fyVC17aGPkLo/UgaOjEiI2FXQfyczrCefORPxIe+2dVmnmk3zkVIbizjrlQzmPGhSYGXG5g==}
     dev: true
@@ -4341,6 +4351,10 @@ packages:
   /@types/styled-system__theme-get/5.0.2:
     resolution: {integrity: sha512-tvGRyzADAn2qQ8Z/fw9YOBTL1EttDQ0zrmHq/N+/K/9tF1l2lsZ9334hls1zie32FCxjPJEhzzXVHxKwqXslog==}
     dev: false
+
+  /@types/trusted-types/2.0.3:
+    resolution: {integrity: sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==}
+    dev: true
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
@@ -5968,6 +5982,10 @@ packages:
     dependencies:
       domelementtype: 2.3.0
     dev: true
+
+  /dompurify/3.0.3:
+    resolution: {integrity: sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==}
+    dev: false
 
   /domutils/2.8.0:
     resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}

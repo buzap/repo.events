@@ -1,4 +1,5 @@
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
 const ghMetionExtension: marked.TokenizerAndRendererExtension = {
     name: 'gh-mention',
@@ -29,6 +30,14 @@ marked.use({
 })
 
 export async function parse(src: string): Promise<string> {
+    // Input: special ZERO WIDTH unicode characters (for example \uFEFF) might interfere with parsing. Some text
+    // editors add them at the start of the file (see: #2139).
+    //
+    // https://github.com/markedjs/marked/issues/2139
+    //
+    // eslint-disable-next-line no-misleading-character-class
+    src = src.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, '')
+
     const tokens = marked.lexer(src)
     const selected: marked.Token[] = []
     let truncateIndex = -1
@@ -51,7 +60,7 @@ export async function parse(src: string): Promise<string> {
     if (selected.length === 0 || truncated) {
         selected.push(makeEllipsisToken())
     }
-    return marked.parser(selected)
+    return DOMPurify.sanitize(marked.parser(selected))
 }
 
 function makeEllipsisToken(): marked.Token {
