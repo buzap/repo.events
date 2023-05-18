@@ -14,8 +14,8 @@ const template: StoryFn<typeof Base> = (args) => <Base {...args} />
 export const WithoutContent = template.bind({})
 WithoutContent.args = {
     event: issueOpenedEventSample as unknown,
+    status: 'issueOpened',
     summary: 'This is the summary',
-    summaryLeading: <EyeIcon />,
 }
 
 export const WithContent = template.bind({})

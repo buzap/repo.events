@@ -27,6 +27,7 @@ importers:
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
       '@types/styled-components': ^5.1.26
+      '@types/styled-system': ^5.1.16
       '@types/styled-system__css': ^5.0.17
       '@typescript-eslint/eslint-plugin': ^5.57.1
       '@typescript-eslint/parser': ^5.57.1
@@ -50,6 +51,7 @@ importers:
       rollup: ^3.21.4
       storybook: ^7.0.7
       styled-components: ^5.3.10
+      styled-system: ^5.1.5
       ts-jest: ^29.1.0
       typescript: ^5.0.2
       vite: ^4.3.4
@@ -60,6 +62,7 @@ importers:
       '@styled-system/css': 5.1.5
       marked: 4.3.0
       octokit: 2.0.14
+      styled-system: 5.1.5
     devDependencies:
       '@babel/core': 7.21.5
       '@babel/plugin-proposal-nullish-coalescing-operator': 7.18.6_@babel+core@7.21.5
@@ -80,6 +83,7 @@ importers:
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/styled-components': 5.1.26
+      '@types/styled-system': 5.1.16
       '@types/styled-system__css': 5.0.17
       '@typescript-eslint/eslint-plugin': 5.59.1_2utyh6gct5glvuz6qwradubqqa
       '@typescript-eslint/parser': 5.59.1_iacogk7kkaymxepzhgcbytyi7q
@@ -4330,7 +4334,6 @@ packages:
     resolution: {integrity: sha512-+dyGs2n2o6QStsexh87NeaRmXYnKOnEe7iOEkcYOwKwI5a1gFL0+Mt/hZKi+4KD1qDMkLkGb0lpDrffb/vSkDQ==}
     dependencies:
       csstype: 3.1.2
-    dev: false
 
   /@types/styled-system__css/5.0.17:
     resolution: {integrity: sha512-QF67UqeDdigjurmckNPCwkYjZriX270ghPiA6f3GqJG6jg7E4hcq7eGtdYh/DNivMz8sklBfT8y7r5brkCr7QA==}

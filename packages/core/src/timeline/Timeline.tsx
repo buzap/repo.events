@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import { SxProp, Box, TabNav } from '@primer/react'
 import { Octokit } from 'octokit'
-import { GithubEvent } from '../types/github'
-import { EventRow } from './EventRow'
 import { LoadDrive } from './LoadDrive'
+import { EventLoader, TimelineItem } from './eventLoader'
+import { Row } from './Row'
 
 export interface TimelineProps extends SxProp {
     owner: string
@@ -11,31 +11,20 @@ export interface TimelineProps extends SxProp {
 }
 
 export function Timeline(props: TimelineProps) {
-    const [events, setEvents] = useState<GithubEvent[]>([])
+    const [items, setItems] = useState<TimelineItem[]>([])
 
-    const iterator = useMemo(() => {
+    const loader = useMemo(() => {
         const octo = new Octokit({})
-        const req = octo.paginate.iterator(octo.rest.activity.listRepoEvents, {
-            owner: props.owner,
-            repo: props.repo,
-        })
-        const iterator = req[Symbol.asyncIterator]()
+        const loader = new EventLoader(octo, props.owner, props.repo)
         const next = async () => {
-            const resp = await iterator.next()
-            if (resp.done) {
-                return
-            }
-            setEvents((original) => {
-                return [...original, ...resp.value.data]
-            })
+            const items = await loader.nextEvents()
+            setItems((original) => [...original, ...items])
         }
-        return {
-            next,
-        }
+        return { next }
     }, [props.owner, props.repo])
 
     useEffect(() => {
-        setEvents([])
+        setItems([])
     }, [props.owner, props.repo])
 
     return (
@@ -48,10 +37,10 @@ export function Timeline(props: TimelineProps) {
                 <TabNav.Link href="#">Issues</TabNav.Link>
             </TabNav>
             <Box>
-                {events.map((event) => (
-                    <EventRow key={event.id} event={event} />
+                {items.map((item) => (
+                    <Row key={item.id} item={item} />
                 ))}
-                <LoadDrive requestLoad={iterator.next} maxAutomaticLoad={5} sx={{ marginTop: 3 }} />
+                <LoadDrive requestLoad={loader.next} maxAutomaticLoad={5} sx={{ marginTop: 3 }} />
             </Box>
         </Box>
     )
