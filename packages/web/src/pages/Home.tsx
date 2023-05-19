@@ -1,15 +1,15 @@
-import { Box } from '@primer/react'
-import { RepoInput, RepoInputChangeEvent } from '@/components/RepoInput'
 import { useCallback } from 'react'
-import { useRouter } from 'next/router'
+import { useNavigate } from 'react-router-dom'
+import { Box } from '@primer/react'
+import { RepoInput, RepoInputChangeEvent } from '../components/RepoInput'
 
 export default function Home() {
-    const router = useRouter()
+    const navigate = useNavigate()
     const onInputChange = useCallback(
         (event: RepoInputChangeEvent) => {
-            router.push(`${event.owner}/${event.repo}`)
+            navigate(`${event.owner}/${event.repo}`)
         },
-        [router]
+        [navigate]
     )
 
     return (

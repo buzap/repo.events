@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Box, IconButton, Link } from '@primer/react'
 import { GearIcon } from '@primer/octicons-react'
 import { Octokit } from 'octokit'
 import { Dashboard, Settings, Timeline } from 'core'
-import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface OctokitInfo {
     octokit: Octokit
@@ -12,9 +12,8 @@ interface OctokitInfo {
 
 const UserSettingKeyPrefix = 'us.'
 
-export default function Page(props: { params: { owner: string; repo: string } }) {
-    const router = useRouter()
-    const { owner, repo } = router.query
+export default function Page() {
+    const { owner, repo } = useParams()
 
     const [isDashboardOpen, setIsDashboardOpen] = useState<boolean>(false)
     const [settings, setSettings] = useState<Settings>({
