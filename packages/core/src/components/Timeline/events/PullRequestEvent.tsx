@@ -33,7 +33,6 @@ export function PullRequestEvent(props: PullRequestEventProps) {
             description = 'reopened a pull request'
             break
         default:
-            console.warn(`hidden PullRequestEvent of action ${payload.action}`, event)
             return null
     }
 

@@ -2,6 +2,7 @@ import { Box, SxProp, RelativeTime, Text } from '@primer/react'
 import { GithubEvent } from '../../../../types/github'
 import { MarkdownPreview } from '../../MarkdownPreview'
 import { Actor } from '../../../Actor'
+import { Row } from './Row'
 
 export interface BaseProps extends SxProp {
     event: GithubEvent
@@ -22,7 +23,7 @@ export function Base(props: BaseProps) {
     }
 
     return (
-        <Box>
+        <Row sx={props.sx}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                 <Box as="span" sx={{ flexGrow: 1 }}>
                     <Actor actor={props.event.actor} />
@@ -38,6 +39,6 @@ export function Base(props: BaseProps) {
                 {props.headline && <Box>{props.headline}</Box>}
                 {details && <Box sx={{ mt: 1 }}>{details}</Box>}
             </Box>
-        </Box>
+        </Row>
     )
 }

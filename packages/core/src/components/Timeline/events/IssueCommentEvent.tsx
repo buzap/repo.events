@@ -1,5 +1,5 @@
 import { SxProp } from '@primer/react'
-import { GithubEvent } from '../../../types/github'
+import { GithubEvent, IssueCommentEventPayload } from '../../../types/github'
 import { Base } from './common/Base'
 import { SecondaryHeadline } from './common'
 import { IssueOpenedIcon, GitPullRequestIcon } from '@primer/octicons-react'
@@ -10,7 +10,7 @@ export interface IssueCommentEventProps extends SxProp {
 
 export function IssueCommentEvent(props: IssueCommentEventProps) {
     const event = props.event
-    const payload = event.payload
+    const payload = event.payload as IssueCommentEventPayload
     const issue = payload.issue
     const isPullRequest = !!issue?.pull_request
 
@@ -29,7 +29,6 @@ export function IssueCommentEvent(props: IssueCommentEventProps) {
             )
             break
         default:
-            console.info(`hidden IssueCommentEvent of action ${payload.action}`, event)
             return null
     }
 

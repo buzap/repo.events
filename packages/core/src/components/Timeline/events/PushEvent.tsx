@@ -1,6 +1,6 @@
 import { SxProp, BranchName, Link } from '@primer/react'
 import { CommitIcon, Icon, TagIcon } from '@primer/octicons-react'
-import { AnyEvent, GithubEvent, PushEvent as PushEventData } from '../../../types/github'
+import { GithubEvent, PushEvent as PushEventData } from '../../../types/github'
 import { SecondaryHeadline, Base } from './common'
 
 export interface PushEventProps extends SxProp {
@@ -103,7 +103,7 @@ function gitCommitShortSHA(sha: string): string {
     return sha.substring(0, 7)
 }
 
-function newGithubLink(event: AnyEvent, path: string): string {
+function newGithubLink(event: GithubEvent, path: string): string {
     if (!path.startsWith('/')) {
         path = '/' + path
     }

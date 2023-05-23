@@ -6,6 +6,7 @@ export interface SecondaryHeadlineProps extends SxProp {
     title: React.ReactNode
     url?: string
     trailingText?: string
+    iconStyles?: SxProp['sx']
 }
 
 export function SecondaryHeadline(props: SecondaryHeadlineProps) {
@@ -28,7 +29,7 @@ export function SecondaryHeadline(props: SecondaryHeadlineProps) {
 
     return (
         <Box sx={props.sx}>
-            <StyledOcticon icon={props.icon} sx={{ mr: 2 }} />
+            <StyledOcticon icon={props.icon} sx={{ ...props.iconStyles, mr: 2 }} />
             {content}
         </Box>
     )

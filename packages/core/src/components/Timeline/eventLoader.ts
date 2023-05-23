@@ -4,7 +4,7 @@ import { StackProps } from './events/Stack'
 
 export interface SingleEvent {
     id: string
-    type: 'single'
+    type: 'event'
     value: GithubEvent
 }
 
@@ -58,7 +58,7 @@ export class EventLoader {
                 forkEventStack?.value.push(event)
                 continue
             }
-            items.push({ id: event.id, type: 'single', value: event })
+            items.push({ id: event.id, type: 'event', value: event })
         }
 
         return items

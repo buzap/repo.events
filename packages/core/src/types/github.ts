@@ -1,15 +1,37 @@
 import { components } from '@octokit/openapi-types'
 
-export type GithubEvent = components['schemas']['event']
+export type GithubEvent = Omit<components['schemas']['event'], 'payload'> & { payload: unknown }
 
-export type AnyEvent = Omit<GithubEvent, 'payload'> & { payload: unknown }
+export type PullRequest = components['schemas']['webhook-pull-request-opened']['pull_request']
+
+export interface Issue {
+    title: string
+    number: number
+    html_url: string
+    pull_request?: PullRequest
+    body?: string
+    state_reason?: string
+}
+
+export interface IssuesEventPayload {
+    action: string
+    issue: Issue
+}
+
+export interface IssueCommentEventPayload {
+    action: string
+    issue: Issue
+    comment: {
+        author_association: string
+        html_url: string
+        body?: string
+    }
+}
 
 export type PushEvent = Omit<GithubEvent, 'type' | 'payload'> & {
     type: 'PushEvent'
     payload: PushEventPayload
 }
-
-export type PullRequest = components['schemas']['webhook-pull-request-opened']['pull_request']
 
 export interface PushEventPayload {
     repository_id: number
@@ -59,4 +81,23 @@ export interface PullRequestEventPayload {
     }
     pull_request: PullRequest
     reason: string
+}
+
+export interface PullRequestReviewEventPayload {
+    action: string
+    pull_request: PullRequest
+    review: {
+        state: 'approved' | 'commented'
+        author_association: string
+    }
+}
+
+export interface PullRequestReviewCommentEventPayload {
+    action: string
+    pull_request: PullRequest
+    comment: {
+        author_association: string
+        html_url: string
+        body?: string
+    }
 }

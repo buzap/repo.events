@@ -1,5 +1,5 @@
 import { SxProp, StateLabelProps } from '@primer/react'
-import { GithubEvent } from '../../../types/github'
+import { GithubEvent, IssuesEventPayload } from '../../../types/github'
 import { PrimaryHeadline, Base } from './common'
 
 export interface IssuesEventProps extends SxProp {
@@ -8,14 +8,14 @@ export interface IssuesEventProps extends SxProp {
 
 export function IssuesEvent(props: IssuesEventProps) {
     const event = props.event
-    const payload = event.payload
+    const payload = event.payload as IssuesEventPayload
     const issue = payload.issue
 
     let status: StateLabelProps['status']
     let description: React.ReactNode = null
     let details = ''
 
-    switch (event.payload.action) {
+    switch (payload.action) {
         case 'opened':
             status = 'issueOpened'
             description = 'opened an issue'
@@ -33,7 +33,6 @@ export function IssuesEvent(props: IssuesEventProps) {
             description = 'reopened an issue'
             break
         default:
-            console.info(`hidden IssuesEvent of action ${event.payload.action}`, event)
             return null
     }
 
