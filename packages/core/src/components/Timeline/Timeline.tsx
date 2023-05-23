@@ -18,6 +18,7 @@ export function Timeline(props: TimelineProps) {
     const [items, setItems] = useState<TimelineItem[]>([])
     const loaderRef = useRef<(() => Promise<void>) | null>(null)
     const [loadingErr, setLoadingErr] = useState<unknown | null>(null)
+    const [allLoaded, setAllLoaded] = useState<boolean>(false)
 
     useEffect(() => {
         let octo = props.octokit
@@ -27,8 +28,9 @@ export function Timeline(props: TimelineProps) {
         const loader = new EventLoader(octo, props.owner, props.repo)
         const next = async () => {
             try {
-                const items = await loader.nextEvents()
-                setItems((original) => [...original, ...items])
+                const result = await loader.nextEvents()
+                setItems((original) => [...original, ...result.items])
+                setAllLoaded(result.done)
             } catch (err) {
                 console.warn('request error', err)
                 setLoadingErr(err)
@@ -43,6 +45,9 @@ export function Timeline(props: TimelineProps) {
     let footer: React.ReactNode = (
         <LoadDrive requestLoad={loaderRef.current || noopLoader} maxAutomaticLoad={16} sx={{ marginTop: 3 }} />
     )
+    if (allLoaded) {
+        footer = null
+    }
     if (loadingErr !== null) {
         footer = (
             <LoadingError

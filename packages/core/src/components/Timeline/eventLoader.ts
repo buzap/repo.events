@@ -17,6 +17,11 @@ export interface EventStack {
 
 export type TimelineItem = SingleEvent | EventStack
 
+export interface Result {
+    items: TimelineItem[]
+    done: boolean
+}
+
 export class EventLoader {
     // private iterator: AsyncIterator<ReturnType<InstanceType<typeof Octokit>['rest']['activity']['listRepoEvents']>>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,17 +36,18 @@ export class EventLoader {
         this.iterator = iterator
     }
 
-    async nextEvents(): Promise<TimelineItem[]> {
+    async nextEvents(): Promise<Result> {
         return this.requestNextEvents()
     }
 
-    private async requestNextEvents(): Promise<TimelineItem[]> {
+    private async requestNextEvents(): Promise<Result> {
         const resp = await this.iterator.next()
+        const events = (resp.value?.data || []) as GithubEvent[]
 
         const items: TimelineItem[] = []
         let watchEventStack: EventStack | null = null
         let forkEventStack: EventStack | null = null
-        for (const event of resp.value.data as GithubEvent[]) {
+        for (const event of events) {
             if (event.type === 'WatchEvent') {
                 if (watchEventStack === null) {
                     watchEventStack = { id: event.id, type: 'stack', eventType: 'WatchEvent', value: [] }
@@ -61,6 +67,6 @@ export class EventLoader {
             items.push({ id: event.id, type: 'event', value: event })
         }
 
-        return items
+        return { items: items, done: !!resp.done }
     }
 }
