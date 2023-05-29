@@ -1,26 +1,28 @@
-import React from "react";
-import logo from "@assets/img/logo.svg";
-import "@pages/popup/Popup.css";
+import { useCallback } from 'react'
+import { ThemeProvider, BaseStyles, Box, ActionList } from '@primer/react'
+import { MarkGithubIcon } from '@primer/octicons-react'
 
-const Popup = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/pages/popup/Popup.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React!
-        </a>
-      </header>
-    </div>
-  );
-};
+function Popup() {
+    const onViewSourceOnGithub = useCallback(() => {
+        chrome.tabs.create({ url: 'https://github.com/buzap/repo.events' })
+    }, [])
 
-export default Popup;
+    return (
+        <ThemeProvider colorMode="dark">
+            <BaseStyles>
+                <Box sx={{ width: '20rem', backgroundColor: 'canvas.default' }}>
+                    <ActionList>
+                        <ActionList.Item onClick={onViewSourceOnGithub}>
+                            <ActionList.LeadingVisual>
+                                <MarkGithubIcon />
+                            </ActionList.LeadingVisual>
+                            View source on github
+                        </ActionList.Item>
+                    </ActionList>
+                </Box>
+            </BaseStyles>
+        </ThemeProvider>
+    )
+}
+
+export default Popup

@@ -12,9 +12,11 @@
   },
   "type": "module",
   "dependencies": {
+    "@primer/octicons-react": "^18.3.0",
     "@primer/react": "^35.25.1",
     "@webcomponents/custom-elements": "^1.6.0",
     "core": "workspace:*",
+    "octokit": "^2.0.14",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": ">= 16.8.0",
