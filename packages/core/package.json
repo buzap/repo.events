@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "rm -rf lib && tsc && rollup --config rollup.config.ts --configPlugin typescript",
+    "build": "rm -rf lib && tsc && rollup --config rollup.config.ts --configPlugin 'typescript={tsconfig: \"tsconfig.node.json\"}'",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "build-storybook": "storybook build",
     "test": "jest",
@@ -32,6 +32,7 @@
     "@babel/core": "^7.11.5",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/preset-react": "^7.22.3",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
@@ -54,6 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react": "^4.0.0",
+    "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-dev-expression": "^0.2.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-preval": "^5.1.0",
@@ -72,6 +74,7 @@
     "storybook": "^7.0.7",
     "styled-components": "^5.3.10",
     "ts-jest": "^29.1.0",
+    "tslib": "^2.5.2",
     "typescript": "^5.0.2",
     "vite": "^4.3.4"
   },

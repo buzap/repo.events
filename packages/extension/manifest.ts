@@ -35,6 +35,7 @@ const manifest: chrome.runtime.ManifestV3 = {
             matches: ['*://*/*'],
         },
     ],
+    permissions: ['storage'],
 }
 
 export default manifest

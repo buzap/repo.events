@@ -1,10 +1,14 @@
-import { useCallback, useMemo } from 'react'
+import { useEffect, useCallback, useMemo, useState } from 'react'
 import { ThemeProvider, BaseStyles, Box } from '@primer/react'
 import { Octokit } from 'octokit'
 import { Timeline } from 'core'
 import { getRepoFromLocation } from './util'
 
 export function App() {
+    const [client, setClient] = useState<typeof Octokit | null>(null)
+
+    useEffect(() => {}, [])
+
     const noop = useCallback(() => {
         // noop
     }, [])
