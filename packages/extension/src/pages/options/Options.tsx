@@ -1,29 +1,19 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { ThemeProvider, BaseStyles, Box, Heading, Text, Link } from '@primer/react'
-import { Settings, SettingsData } from 'core'
-import { UserSettingsPrefix } from '@src/common/settings'
+import { Settings as SettingsComponent, SettingsData } from 'core'
+import { Settings } from '@src/common/settings'
 
 export function Options() {
-    const [settings, setSettings] = useState<SettingsData>({
+    const [settingsData, setSettingsData] = useState<SettingsData>({
         personalAccessToken: null,
     })
+    const settings = useRef(new Settings())
 
     useEffect(() => {
-        const keys: Array<keyof SettingsData> = ['personalAccessToken']
-
-        const fullKeys = keys.map((k) => UserSettingsPrefix + k)
-        chrome.storage.local
-            .get(fullKeys)
-            .then((values) => {
-                const settings: { [key: string]: unknown } = {}
-                for (const [key, val] of Object.entries(values || {})) {
-                    let k = key
-                    if (key.startsWith(UserSettingsPrefix)) {
-                        k = key.slice(UserSettingsPrefix.length)
-                    }
-                    settings[k] = val
-                }
-                setSettings(settings as unknown as SettingsData)
+        settings.current
+            .getAllUserSettings()
+            .then((settings) => {
+                setSettingsData(settings)
             })
             .catch((err) => {
                 console.error('unable to read user settings: ', err)
@@ -31,11 +21,7 @@ export function Options() {
     }, [])
 
     const onSettingChange = useCallback((updated: Partial<SettingsData>) => {
-        const values: { [key: string]: unknown } = {}
-        for (const [key, value] of Object.entries(updated)) {
-            values[UserSettingsPrefix + key] = value
-        }
-        chrome.storage.local.set(values)
+        settings.current.setUserSettings(updated)
     }, [])
 
     return (
@@ -69,7 +55,7 @@ export function Options() {
                                 </Box>
                             </Box>
                         </Box>
-                        <Settings settings={settings} onSettingChange={onSettingChange} />
+                        <SettingsComponent settings={settingsData} onSettingChange={onSettingChange} />
                     </Box>
                 </Box>
             </BaseStyles>

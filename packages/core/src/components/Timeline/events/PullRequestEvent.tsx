@@ -1,5 +1,5 @@
 import { SxProp, StateLabelProps } from '@primer/react'
-import { GithubEvent, PullRequestEventPayload } from '../../../types/github'
+import { GithubEvent, PullRequestEventPayload } from '../../../utils/github'
 import { PrimaryHeadline, Base } from './common'
 
 export interface PullRequestEventProps extends SxProp {

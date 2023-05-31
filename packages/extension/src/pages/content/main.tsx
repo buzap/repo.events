@@ -1,27 +1,34 @@
 import { createRoot } from 'react-dom/client'
-import { createElement } from 'react'
 // customElements is not supported in content script but required by RelativeTime from @primer/react.
 // using a polyfill.
 import '@webcomponents/custom-elements'
-import { getRepoFromLocation } from './util'
+import refreshOnUpdate from 'virtual:reload-on-update-in-view'
+import { RepoIdentifier, getRepoFromLocation } from './util'
 import { App } from './App'
 
-function createNavItem(onClick: () => void): HTMLElement {
+refreshOnUpdate('pages/content')
+
+const ActivityTabId = 'repo-events-activity-tab'
+
+function injectNavItem(onClick: () => void) {
+    const navContainer = document.querySelector('nav.UnderlineNav ul.UnderlineNav-body')
+
     const a = document.createElement('a')
-    a.innerText = 'Activity'
-    a.id = 'activity-tab'
+    a.innerText = 'Activities'
+    a.id = ActivityTabId
     a.setAttribute('data-tab-item', 'activity-tab')
-    a.setAttribute('data-turbo-frame', 'repo-content-turbo-frame')
-    a.setAttribute('data-pjax', '#repo-content-pjax-container')
+    // a.setAttribute('data-turbo-frame', 'repo-content-turbo-frame')
+    // a.setAttribute('data-pjax', '#repo-content-pjax-container')
     a.setAttribute('data-view-component', 'true')
-    a.className = 'UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item'
+    a.className = 'UnderlineNav-item no-wrap js-responsive-underlinenav-item'
 
     a.addEventListener('click', () => {
-        const repoInfo = getRepoFromLocation()
-        if (!repoInfo) {
-            return
+        const currentActiveTab = navContainer.querySelector('li a.selected')
+        if (currentActiveTab) {
+            currentActiveTab.classList.remove('selected', 'js-selected-navigation-item')
+            currentActiveTab.setAttribute('aria-current', 'false')
         }
-        history.pushState(null, '', `/${repoInfo.owner}/${repoInfo.repo}/activity`)
+        a.classList.add('selected')
         onClick()
     })
 
@@ -30,10 +37,10 @@ function createNavItem(onClick: () => void): HTMLElement {
     li.className = 'd-inline-flex'
     li.appendChild(a)
 
-    return li
+    navContainer.appendChild(li)
 }
 
-function mountActivities() {
+function injectActivities(repoId: RepoIdentifier) {
     const container = document.querySelector('turbo-frame#repo-content-turbo-frame')
     if (!container) {
         console.error('unable to find mount point for activities')
@@ -67,37 +74,39 @@ function mountActivities() {
             }
         }
         if (rootNodeRemoved) {
+            const navItem = document.querySelector(`#${ActivityTabId}`)
+            if (navItem) {
+                navItem.classList.remove('selected')
+            }
             root.unmount()
             observer.disconnect()
         }
     })
     observer.observe(container, { childList: true })
 
-    root.render(createElement(App))
+    root.render(<App owner={repoId.owner} repo={repoId.repo} />)
 }
 
-const ActivityPathPattern = /^\/([A-Za-z0-9-_.]+)\/([A-Za-z0-9-_.]+)\/activity/
-
-function run() {
+function mountApp() {
     const repo = getRepoFromLocation()
     if (repo === null) {
         return
     }
+    const onActivityTabClick = () => {
+        injectActivities(repo)
+    }
+    injectNavItem(onActivityTabClick)
+}
 
-    window.addEventListener('popstate', () => {
-        const isActivityPage = ActivityPathPattern.test(window.location.pathname)
-        if (!isActivityPage) {
+function run() {
+    mountApp()
+    setInterval(() => {
+        const navItem = document.querySelector(`#${ActivityTabId}`)
+        if (navItem) {
             return
         }
-        mountActivities()
-    })
-
-    const navItem = createNavItem(() => {
-        mountActivities()
-    })
-
-    const navContainer = document.querySelector('nav.UnderlineNav ul.UnderlineNav-body')
-    navContainer.appendChild(navItem)
+        mountApp()
+    }, 1000)
 }
 
 run()

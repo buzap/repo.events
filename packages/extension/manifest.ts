@@ -22,7 +22,7 @@ const manifest: chrome.runtime.ManifestV3 = {
     },
     content_scripts: [
         {
-            matches: ['https://github.com/*/*'],
+            matches: ['https://github.com/*'],
             js: ['src/pages/content/index.js'],
             // KEY for cache invalidation
             // css: ['assets/css/contentStyle<KEY>.chunk.css'],

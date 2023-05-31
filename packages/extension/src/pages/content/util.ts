@@ -1,4 +1,9 @@
-export function getRepoFromLocation(l: Location = window.location): { owner: string; repo: string } | null {
+export interface RepoIdentifier {
+    owner: string
+    repo: string
+}
+
+export function getRepoFromLocation(l: Location = window.location): RepoIdentifier | null {
     const path = l.pathname || ''
     const parts = path.split('/')
     if (parts.length < 3) {

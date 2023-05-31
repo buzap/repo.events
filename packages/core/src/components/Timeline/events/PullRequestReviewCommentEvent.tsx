@@ -1,8 +1,8 @@
 import { SxProp } from '@primer/react'
 import { GitPullRequestIcon } from '@primer/octicons-react'
-import { GithubEvent } from '../../../types/github'
+import { GithubEvent } from '../../../utils/github'
 import { Base, SecondaryHeadline } from './common'
-import { PullRequestReviewCommentEventPayload } from '../../../types/github'
+import { PullRequestReviewCommentEventPayload } from '../../../utils/github'
 
 export interface PullRequestReviewCommentEventProps extends SxProp {
     event: GithubEvent

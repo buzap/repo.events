@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { PushEvent as PushEventData } from '../../../types/github'
+import { PushEvent as PushEventData } from '../../../utils/github'
 import pushEventSample_oneCommit from '../../../fixtures/pushEvent_oneCommit.json'
 import { PushEvent } from './PushEvent'
 

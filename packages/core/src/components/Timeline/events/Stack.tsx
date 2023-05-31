@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { Avatar, Box, Text, SxProp, RelativeTime, IconButton, Details, useDetails } from '@primer/react'
 import { UnfoldIcon, FoldIcon } from '@primer/octicons-react'
-import { GithubEvent } from '../../../types/github'
+import { GithubEvent } from '../../../utils/github'
 import { Actor } from '../../../components/Actor'
 import { Row } from './common/Row'
 

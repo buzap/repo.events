@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "rm -rf lib && tsc && rollup --config rollup.config.ts --configPlugin 'typescript={tsconfig: \"tsconfig.node.json\"}'",
+    "build": "rm -rf lib && tsc",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "build-storybook": "storybook build",
     "test": "jest",

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
-import { GithubEvent } from '../../../types/github'
+import { GithubEvent } from '../../../utils/github'
 import issueCommentEventSample from '../../../fixtures/issueCommentEvent.json'
 import { IssueCommentEvent } from './IssueCommentEvent'
 

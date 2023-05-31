@@ -2,7 +2,7 @@ import React from 'react'
 import { Meta, StoryFn } from '@storybook/react'
 import issueOpenedEventSample from '../../../fixtures/issueOpenedEvent.json'
 import issueClosedEventSample from '../../../fixtures/issueClosedEvent.json'
-import { GithubEvent } from '../../../types/github'
+import { GithubEvent } from '../../../utils/github'
 import { IssuesEvent } from './IssuesEvent'
 
 export default {
