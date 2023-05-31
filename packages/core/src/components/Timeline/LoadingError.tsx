@@ -1,5 +1,5 @@
 import { type RequestError } from '@octokit/request-error'
-import { Box, Flash, Link, SxProp, Text, themeGet } from '@primer/react'
+import { Box, Details, Flash, Link, SxProp, Text, themeGet } from '@primer/react'
 import styled from 'styled-components'
 
 export interface LoadingErrorPorps extends SxProp {
@@ -64,6 +64,10 @@ export function LoadingError(props: LoadingErrorPorps) {
                     https://github.com/buzap/repo.event/issues
                 </Link>
             </Box>
+            <Details sx={{ marginTop: 4, color: 'fg.muted' }}>
+                <Text as="summary">Error details</Text>
+                <Box as="pre">{JSON.stringify(requestError)}</Box>
+            </Details>
         </Flash>
     )
 }

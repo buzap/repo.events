@@ -1,6 +1,7 @@
 import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
+// import commonjs from '@rollup/plugin-commonjs'
+import { RollupOptions } from 'rollup'
 import packageJSON from './package.json' assert { type: 'json' }
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
@@ -10,11 +11,11 @@ const dependencies = [
     ...Object.keys(packageJSON.devDependencies ?? {}),
 ]
 
-function createPackageRegex(name) {
+function createPackageRegex(name: string) {
     return new RegExp(`^${name}(/.*)?`)
 }
 
-export default {
+const options: RollupOptions = {
     input: 'src/index.ts',
     external: dependencies.map(createPackageRegex),
     output: {
@@ -54,11 +55,13 @@ export default {
                 '@babel/plugin-proposal-optional-chaining',
             ],
         }),
-        commonjs({
-            extensions,
-        }),
+        // commonjs({
+        //     extensions,
+        // }),
         resolve({
             extensions,
         }),
     ],
 }
+
+export default options

@@ -1,5 +1,5 @@
 import { Box, SxProp, RelativeTime, Text } from '@primer/react'
-import { GithubEvent } from '../../../../types/github'
+import { GithubEvent } from '../../../../utils/github'
 import { MarkdownPreview } from '../../MarkdownPreview'
 import { Actor } from '../../../Actor'
 import { Row } from './Row'

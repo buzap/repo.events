@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Avatar, Box, Link, SxProp, Text, themeGet } from '@primer/react'
-import { GithubEvent } from '../../types/github'
+import { GithubEvent } from '../../utils/github'
 
 export interface ActorProps extends SxProp {
     actor: GithubEvent['actor']

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { Timeline } from './Timeline'
 import { Octokit } from 'octokit'
+import { defaultOctokitOptions } from '../../utils'
+import { Timeline } from './Timeline'
 
 export default {
     title: 'components/Timeline/Timeline',
@@ -13,6 +14,6 @@ export const Default: Story = {
     args: {
         owner: 'golang',
         repo: 'go',
-        octokit: new Octokit(),
+        octokit: new Octokit(defaultOctokitOptions()),
     },
 }

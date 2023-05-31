@@ -1,6 +1,6 @@
 import { SxProp, BranchName, Link } from '@primer/react'
 import { CommitIcon, Icon, TagIcon } from '@primer/octicons-react'
-import { GithubEvent, PushEvent as PushEventData } from '../../../types/github'
+import { GithubEvent, PushEvent as PushEventData } from '../../../utils/github'
 import { SecondaryHeadline, Base } from './common'
 
 export interface PushEventProps extends SxProp {

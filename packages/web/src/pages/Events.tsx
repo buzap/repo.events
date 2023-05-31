@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 import { Box, IconButton, Link } from '@primer/react'
 import { GearIcon } from '@primer/octicons-react'
 import { Octokit } from 'octokit'
-import { Dashboard, Settings, Timeline } from 'core'
+import { SettingsData as Settings, Timeline, defaultOctokitOptions } from 'core'
+import { Dashboard } from '../components/Dashboard'
 
 interface OctokitInfo {
     octokit: Octokit
@@ -29,6 +30,7 @@ export default function Page() {
         const octo: OctokitInfo = {
             octokit: new Octokit({
                 auth: settings.personalAccessToken,
+                ...defaultOctokitOptions(),
             }),
             authenticated: !!settings.personalAccessToken,
         }

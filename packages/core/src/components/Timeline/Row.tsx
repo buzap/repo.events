@@ -1,5 +1,5 @@
 import { SxProp } from '@primer/react'
-import { PushEvent as PushEventData } from '../../types/github'
+import { PushEvent as PushEventData } from '../../utils/github'
 import { IssuesEvent } from './events/IssuesEvent'
 import { IssueCommentEvent } from './events/IssueCommentEvent'
 import { PushEvent } from './events/PushEvent'

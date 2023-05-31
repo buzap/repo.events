@@ -1,5 +1,5 @@
 import { SxProp, StateLabelProps } from '@primer/react'
-import { GithubEvent, IssuesEventPayload } from '../../../types/github'
+import { GithubEvent, IssuesEventPayload } from '../../../utils/github'
 import { PrimaryHeadline, Base } from './common'
 
 export interface IssuesEventProps extends SxProp {

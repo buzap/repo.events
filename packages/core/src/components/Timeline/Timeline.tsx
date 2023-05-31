@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { SxProp, Box } from '@primer/react'
 import { Octokit } from 'octokit'
+import { defaultOctokitOptions } from '../../utils'
 import { LoadDrive } from './LoadDrive'
 import { EventLoader, TimelineItem } from './eventLoader'
 import { Row } from './Row'
@@ -23,7 +24,7 @@ export function Timeline(props: TimelineProps) {
     useEffect(() => {
         let octo = props.octokit
         if (!octo) {
-            octo = new Octokit({})
+            octo = new Octokit(defaultOctokitOptions())
         }
         const loader = new EventLoader(octo, props.owner, props.repo)
         const next = async () => {

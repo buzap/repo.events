@@ -1,5 +1,5 @@
 import { SxProp } from '@primer/react'
-import { GithubEvent, IssueCommentEventPayload } from '../../../types/github'
+import { GithubEvent, IssueCommentEventPayload } from '../../../utils/github'
 import { Base } from './common/Base'
 import { SecondaryHeadline } from './common'
 import { IssueOpenedIcon, GitPullRequestIcon } from '@primer/octicons-react'
