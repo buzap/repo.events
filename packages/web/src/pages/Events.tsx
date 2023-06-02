@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Box, IconButton, Link } from '@primer/react'
-import { GearIcon } from '@primer/octicons-react'
+import { useParams, Link as RouterLink } from 'react-router-dom'
+import { Box, IconButton, Link, StyledOcticon, SxProp, Text, sx } from '@primer/react'
+import { GearIcon, LinkExternalIcon } from '@primer/octicons-react'
 import { Octokit } from 'octokit'
 import { SettingsData as Settings, Timeline, defaultOctokitOptions } from 'core'
 import { Dashboard } from '../components/Dashboard'
+import logo from '../assets/logo-34.png'
+import styled from 'styled-components'
 
 interface OctokitInfo {
     octokit: Octokit
@@ -15,6 +17,15 @@ const UserSettingKeyPrefix = 'us.'
 
 export default function Page() {
     const { owner, repo } = useParams()
+
+    useEffect(() => {
+        document.title = `${owner}/${repo}: recent activities`
+
+        const descElement = document.querySelector('head meta[name=description]')
+        if (descElement) {
+            descElement.setAttribute('content', `Recent activities from github repository ${owner}/${repo}`)
+        }
+    }, [owner, repo])
 
     const [isDashboardOpen, setIsDashboardOpen] = useState<boolean>(false)
     const [settings, setSettings] = useState<Settings>({
@@ -77,23 +88,72 @@ export default function Page() {
         }
     }, [settings])
 
+    const [scrollSensor, setScrollSensor] = useState<HTMLElement | null>()
+    const [headerStuck, setHeaderStuck] = useState<boolean>(false)
+    useEffect(() => {
+        if (!scrollSensor) {
+            return
+        }
+        const observer = new IntersectionObserver((entries) => {
+            if (!entries) {
+                return
+            }
+            const entry = entries[0]
+            setHeaderStuck(!entry.isIntersecting)
+        })
+        observer.observe(scrollSensor)
+        return () => {
+            observer.disconnect()
+        }
+    }, [scrollSensor])
+
     if (!owner || !repo) {
         return null
     }
 
+    let headerStuckStyles: SxProp['sx'] = {}
+    if (headerStuck) {
+        headerStuckStyles = {
+            backgroundColor: 'canvas.overlay',
+            boxShadow: 'shadow.medium',
+        }
+    }
+
     return (
         <>
-            <Box sx={{ maxWidth: '960px', mx: 'auto', px: 3, py: 3 }}>
-                <Box sx={{ display: 'flex', marginBottom: 3 }}>
-                    <Link
-                        href={`https://github.com/${owner}/${repo}`}
-                        hoverColor="accent.fg"
-                        sx={{ flexGrow: 1, color: 'fg.default', fontWeight: 'bold' }}
-                    >
-                        {owner}/{repo}
-                    </Link>
+            <Box ref={setScrollSensor} />
+            <Box
+                sx={{
+                    position: 'sticky',
+                    top: 0,
+                    padding: 3,
+                    ...headerStuckStyles,
+                }}
+            >
+                <Box sx={{ display: 'flex', maxWidth: '960px', mx: 'auto' }}>
+                    <Box as="span" sx={{ flexGrow: 1 }}>
+                        {headerStuck && (
+                            <StyledRouterLink to="/" sx={{ mr: 1 }}>
+                                <Box as="img" src={logo} sx={{ width: '18px', mr: 1, verticalAlign: 'text-bottom' }} />
+                                Repo.Events |
+                            </StyledRouterLink>
+                        )}
+                        <Link
+                            href={`https://github.com/${owner}/${repo}`}
+                            target="_blank"
+                            hoverColor="accent.fg"
+                            sx={{ flexGrow: 1, color: 'fg.default', fontWeight: 'bold' }}
+                        >
+                            <Text>
+                                {owner}/{repo}
+                            </Text>
+                            <StyledOcticon icon={LinkExternalIcon} sx={{ ml: 1 }} />
+                        </Link>
+                    </Box>
                     <IconButton icon={GearIcon} aria-label="Settings" size="small" onClick={openDashboard} />
                 </Box>
+            </Box>
+            <Box sx={{ maxWidth: '960px', mx: 'auto' }}>
                 <Timeline
                     owner={owner as string}
                     repo={repo as string}
@@ -111,3 +171,7 @@ export default function Page() {
         </>
     )
 }
+
+const StyledRouterLink = styled(RouterLink)`
+    ${sx}
+`

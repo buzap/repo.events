@@ -36,6 +36,7 @@ export function IssueCommentEvent(props: IssueCommentEventProps) {
         <Base
             event={event}
             description={description}
+            authorAssociation={payload.comment?.author_association}
             headline={headline}
             markdownDetails={payload.comment?.body || ''}
         />

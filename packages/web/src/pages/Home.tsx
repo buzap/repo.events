@@ -23,7 +23,7 @@ export default function Home() {
                 justifyContent: 'center',
             }}
         >
-            <RepoInput onChange={onInputChange} sx={{ marginTop: '30vh', width: '750px', maxWidth: '90vw' }} />
+            <RepoInput onChange={onInputChange} sx={{ marginTop: '40vh', width: '750px', maxWidth: '90vw' }} />
         </Box>
     )
 }

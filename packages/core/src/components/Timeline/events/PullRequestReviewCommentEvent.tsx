@@ -27,6 +27,7 @@ export function PullRequestReviewCommentEvent(props: PullRequestReviewCommentEve
         <Base
             event={event}
             description="reviewed pull request"
+            authorAssociation={payload.comment.author_association}
             headline={headline}
             markdownDetails={payload.comment.body || ''}
         />

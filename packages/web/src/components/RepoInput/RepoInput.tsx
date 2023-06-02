@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 import { SxProp, Box, Text, TextInput, FormControl, StyledOcticon, Link, IconButton } from '@primer/react'
 import { MarkGithubIcon, CheckIcon, SyncIcon } from '@primer/octicons-react'
-import github100 from './github100.json'
+import { RepoIdentifier, getRandomRepos } from '../../utils/randomRepo'
 
 const repoNamePattern = /^[\w.-]+\/[\w.-]+$/
 
@@ -53,10 +53,21 @@ export function RepoInput(props: RepoInputProps) {
         onChange(value, 'input')
     }, [onChange, value])
 
-    const [shownSuggestions, setShowSuggestions] = useState<string[]>(['golang/go', 'microsoft/vscode', 'apple/swift'])
+    const [shownSuggestions, setShowSuggestions] = useState<RepoIdentifier[]>([
+        { owner: 'golang', repo: 'go' },
+        { owner: 'facebook', repo: 'react' },
+        { owner: 'microsoft', repo: 'vscode' },
+    ])
     const changeSuggestions = useCallback(() => {
-        setShowSuggestions(getRandomRepoNames())
+        setShowSuggestions(getRandomRepos(3))
     }, [])
+
+    const onSuggestionClick = useCallback(
+        (repo: RepoIdentifier) => {
+            originalOnChange({ owner: repo.owner, repo: repo.repo, from: 'suggestion' })
+        },
+        [originalOnChange]
+    )
 
     const isValid = isValidRepoName(value)
 
@@ -124,9 +135,13 @@ export function RepoInput(props: RepoInputProps) {
                     sx={{ mr: 1, verticalAlign: 'middle' }}
                 />
                 Try these
-                {shownSuggestions.map((s) => (
-                    <Link key={s} onClick={() => onChange(s, 'suggestion')} sx={{ ml: 2, cursor: 'pointer' }}>
-                        {s}
+                {shownSuggestions.map((repo) => (
+                    <Link
+                        key={`${repo.owner}/${repo.repo}`}
+                        onClick={() => onSuggestionClick(repo)}
+                        sx={{ ml: 2, cursor: 'pointer' }}
+                    >
+                        {repo.owner}/{repo.repo}
                     </Link>
                 ))}
             </FormControl.Caption>
@@ -136,14 +151,4 @@ export function RepoInput(props: RepoInputProps) {
 
 function isValidRepoName(s: string): boolean {
     return repoNamePattern.test(s)
-}
-
-function getRandomInt(min: number, max: number): number {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
-}
-
-function getRandomRepoNames(): string[] {
-    return [github100[getRandomInt(0, 33)], github100[getRandomInt(33, 66)], github100[getRandomInt(66, 100)]]
 }

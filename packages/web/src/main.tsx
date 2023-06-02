@@ -6,12 +6,16 @@ import { Layout } from './components/Layout'
 import './main.css'
 import Home from './pages/Home'
 import Events from './pages/Events'
+import About from './pages/About'
+import Extension from './pages/Extension'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<Layout />}>
-            <Route path="/*" element={<Home />} />
             <Route path=":owner/:repo" element={<Events />} />
+            <Route path="about" element={<About />} />
+            <Route path="extension" element={<Extension />} />
+            <Route path="/*" element={<Home />} />
         </Route>
     )
 )

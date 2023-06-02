@@ -40,6 +40,7 @@ export function PullRequestEvent(props: PullRequestEventProps) {
         <Base
             event={event}
             description={description}
+            authorAssociation={pr.author_association}
             headline={
                 <PrimaryHeadline status={status} title={pr.title} trailingText={`#${pr.number}`} url={pr.html_url} />
             }

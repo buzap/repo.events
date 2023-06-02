@@ -35,6 +35,7 @@ export const EveryThing = template.bind({})
 EveryThing.args = {
     event: issueOpenedEventSample as unknown,
     description: 'opened issue',
+    authorAssociation: 'COLLABORATOR',
     headline: (
         <PrimaryHeadline
             status="issueOpened"

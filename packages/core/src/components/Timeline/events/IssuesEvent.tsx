@@ -40,6 +40,7 @@ export function IssuesEvent(props: IssuesEventProps) {
         <Base
             event={event}
             description={description}
+            authorAssociation={issue.author_association}
             headline={
                 <PrimaryHeadline
                     title={issue?.title || ''}

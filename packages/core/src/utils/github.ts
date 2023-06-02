@@ -7,6 +7,7 @@ export type PullRequest = components['schemas']['webhook-pull-request-opened']['
 export interface Issue {
     title: string
     number: number
+    author_association?: string
     html_url: string
     pull_request?: PullRequest
     body?: string

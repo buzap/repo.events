@@ -23,5 +23,13 @@ export function PullRequestReviewEvent(props: PullRequestReviewEventProps) {
             url={payload.pull_request.html_url}
         />
     )
-    return <Base event={event} description="approved pull request" headline={headline} sx={props.sx} />
+    return (
+        <Base
+            event={event}
+            description="approved pull request"
+            authorAssociation={payload.review.author_association}
+            headline={headline}
+            sx={props.sx}
+        />
+    )
 }
