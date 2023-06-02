@@ -5,9 +5,17 @@ github repository.
 
 There is a **web app** and a **chrome extension**.
 
+<div style="text-align: center;">
+    <img src="./doc/screenshot_web.png" style="width: 80%">
+</div>
+
 To use the web app, visit [repo.events](https://repo.events). As a shortcut, enter `repo.events/{owner}/{repo}` to your 
 browser address bar to see activities from the repository immediately. For example [repo.events/golang/go](https://repo.events/golang/go) 
 or [repo.events/apple/swift](https://repo.events/apple/swift).
+
+<div style="text-align: center;">
+    <img src="./doc/screenshot_extension.png" style="width: 80%">
+</div>
 
 The chrome extension add a "Activities" tab to the github repository page, so you can see activities of the repository 
 without open a new browser tab. You can install the extension from [chrome webstore](https://chrome.google.com/webstore/detail/repoevents/feffmdfhanmdkmeepnmcdpjagojedlol).
