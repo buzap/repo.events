@@ -153,7 +153,7 @@ export default function Page() {
                     <IconButton icon={GearIcon} aria-label="Settings" size="small" onClick={openDashboard} />
                 </Box>
             </Box>
-            <Box sx={{ maxWidth: '960px', mx: 'auto' }}>
+            <Box sx={{ maxWidth: '960px', mx: 'auto', paddingX: 3 }}>
                 <Timeline
                     owner={owner as string}
                     repo={repo as string}
