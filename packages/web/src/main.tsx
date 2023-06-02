@@ -10,7 +10,7 @@ import Events from './pages/Events'
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/*" element={<Home />} />
             <Route path=":owner/:repo" element={<Events />} />
         </Route>
     )
