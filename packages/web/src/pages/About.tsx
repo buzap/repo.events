@@ -77,7 +77,7 @@ export default function About() {
                     There is a browser extension too. The browser extension add a "Activities" tab to the github
                     repository page, so you can see activities of the repository without open a new browser tab.
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Box as="img" src={extensionScreenshot} sx={{ height: '400px' }} />
+                        <Box as="img" src={extensionScreenshot} sx={{ maxWidth: '90%' }} />
                         <Box sx={{ color: 'fg.muted' }}>Screenshot of the browser extension</Box>
                     </Box>
                 </Box>
