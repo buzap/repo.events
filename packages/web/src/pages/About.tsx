@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Box, Text, IconButton, Heading, Link, sx } from '@primer/react'
-import styled from 'styled-components'
+import { Box, Text, IconButton, Heading, Link } from '@primer/react'
 import { Timeline } from 'core'
 import { SyncIcon } from '@primer/octicons-react'
 import { RepoIdentifier, getRandomRepo } from '../utils/randomRepo'
@@ -101,8 +100,3 @@ export default function About() {
         </Box>
     )
 }
-
-const Paragraph = styled.div`
-    margin: 1rem 0;
-    ${sx}
-`
