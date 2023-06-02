@@ -1,6 +1,6 @@
 {
   "name": "repo.events",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "See recent activities of a github repository",
   "scripts": {
     "build": "tsc --noEmit && vite build",
